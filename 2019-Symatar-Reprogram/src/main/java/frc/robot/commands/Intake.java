@@ -14,7 +14,6 @@ import frc.robot.OI;
 import frc.robot.RobotMap;
 
 public class Intake extends Command {
-
   public Intake() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -28,14 +27,14 @@ public class Intake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.leftIntake.set(ControlMode.PercentOutput, 0.4);
-    RobotMap.rightIntake.set(ControlMode.PercentOutput, 0.4);
+    RobotMap.rightIntake.set(ControlMode.PercentOutput, -0.4);
+    RobotMap.leftIntake.set(ControlMode.PercentOutput, -0.4);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !OI.intake.get();
+    return OI.pilotController.getRawAxis(2) <= 0.5;
   }
 
   // Called once after isFinished returns true
@@ -44,7 +43,6 @@ public class Intake extends Command {
     RobotMap.rightIntake.set(ControlMode.PercentOutput, 0);
     RobotMap.leftIntake.set(ControlMode.PercentOutput, 0);
   }
-
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override

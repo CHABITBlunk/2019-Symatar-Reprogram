@@ -7,17 +7,13 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 
-public class Outtake extends Command {
-
-  public Outtake() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ArmBrake extends Command {
+  public ArmBrake() {
+    
   }
 
   // Called just before this Command runs the first time
@@ -28,21 +24,22 @@ public class Outtake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.leftIntake.set(ControlMode.PercentOutput, 0.4);
-    RobotMap.rightIntake.set(ControlMode.PercentOutput, 0.4);
+    if (OI.aButton.get() || OI.yButton.get()) {
+      RobotMap.armBrake.set(RobotMap.disengageBrake);
+    } else if (!OI.aButton.get() || !OI.yButton.get()) {
+      RobotMap.armBrake.set(RobotMap.engageBrake);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return OI.pilotController.getRawAxis(3) <= 0.5;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    RobotMap.rightIntake.set(ControlMode.PercentOutput, 0);
-    RobotMap.leftIntake.set(ControlMode.PercentOutput, 0);
   }
 
   // Called when another command which requires one or more of the same

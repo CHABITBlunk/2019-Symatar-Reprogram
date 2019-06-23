@@ -14,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -63,6 +64,10 @@ public class RobotMap {
   public static DoubleSolenoid leftIntakePiston = new DoubleSolenoid(6, 7);
   public static DoubleSolenoid.Value openLeftIntake = DoubleSolenoid.Value.kForward;
   public static DoubleSolenoid.Value closeLeftIntake = DoubleSolenoid.Value.kReverse;
+
+  public static DoubleSolenoid armBrake = new DoubleSolenoid(4, 5);
+  public static DoubleSolenoid.Value disengageBrake = Value.kReverse;
+  public static DoubleSolenoid.Value engageBrake = Value.kForward;
 
   //Arrays of motors
   public static TalonSRX[] driveMotors = {

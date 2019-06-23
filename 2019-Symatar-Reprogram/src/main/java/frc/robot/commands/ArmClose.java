@@ -24,13 +24,13 @@ public class ArmClose extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.joystickOne.getRawAxis(3) != 0) {
-      RobotMap.rightIntakePiston.set(RobotMap.openRightIntake);
-      RobotMap.leftIntakePiston.set(RobotMap.openLeftIntake);
-    }
-    else {
+    if (OI.bButton.get()) {
       RobotMap.rightIntakePiston.set(RobotMap.closeRightIntake);
       RobotMap.leftIntakePiston.set(RobotMap.closeLeftIntake);
+    }
+    else {
+      RobotMap.rightIntakePiston.set(RobotMap.openRightIntake);
+      RobotMap.leftIntakePiston.set(RobotMap.openLeftIntake);
     }
   }
 

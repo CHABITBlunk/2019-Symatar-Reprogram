@@ -1,19 +1,9 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-/**
- * Add your docs here.
- */
 public class RobotConfig {
 
     public static double gearRatio = 7.5;
@@ -50,20 +40,13 @@ public class RobotConfig {
         RobotMap.leftIntake.setInverted(false);
         RobotMap.rightIntake.setInverted(false);
 
-        //Set motors to coast mode
-        RobotMap.rightDriveLead.setNeutralMode(NeutralMode.Coast);
-        RobotMap.leftDriveLead.setNeutralMode(NeutralMode.Coast);
-        RobotMap.rightDriveFollowerOne.setNeutralMode(NeutralMode.Coast);
-        RobotMap.rightDriveFollowerTwo.setNeutralMode(NeutralMode.Coast);
-        RobotMap.leftDriveFollowerOne.setNeutralMode(NeutralMode.Coast);
-        RobotMap.leftDriveFollowerTwo.setNeutralMode(NeutralMode.Coast);
-
         for (TalonSRX talon : RobotMap.driveMotors) {
             talon.configContinuousCurrentLimit(driveMotorContinuousCurrent, timeOut);
             talon.configPeakCurrentDuration(driveMotorPeakCurrentDuration, timeOut);
             talon.configPeakCurrentLimit(driveMotorPeakCurrent, timeOut);
             talon.enableCurrentLimit(enableDriveCurrentLimit);
         }
+
         RobotMap.leftDriveLead.configVoltageCompSaturation(voltageControlMax, 10);
         RobotMap.leftDriveLead.enableVoltageCompensation(false);
         RobotMap.leftDriveLead.configVoltageMeasurementFilter(32, 10);
@@ -77,5 +60,24 @@ public class RobotConfig {
         RobotMap.rightDriveLead.enableVoltageCompensation(false);
         RobotMap.rightDriveLead.configOpenloopRamp(0.0, 0);
         RobotMap.leftDriveLead.configOpenloopRamp(0.0, 0);
+        setDriveMotorsCoast();
+    }
+
+    public static void setDriveMotorsCoast() {
+        RobotMap.rightDriveLead.setNeutralMode(NeutralMode.Coast);
+        RobotMap.leftDriveLead.setNeutralMode(NeutralMode.Coast);
+        RobotMap.rightDriveFollowerOne.setNeutralMode(NeutralMode.Coast);
+        RobotMap.rightDriveFollowerTwo.setNeutralMode(NeutralMode.Coast);
+        RobotMap.leftDriveFollowerOne.setNeutralMode(NeutralMode.Coast);
+        RobotMap.leftDriveFollowerTwo.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public static void setDriveMotorsBrake() {
+        RobotMap.rightDriveLead.setNeutralMode(NeutralMode.Brake);
+        RobotMap.leftDriveLead.setNeutralMode(NeutralMode.Brake);
+        RobotMap.rightDriveFollowerOne.setNeutralMode(NeutralMode.Brake);
+        RobotMap.rightDriveFollowerTwo.setNeutralMode(NeutralMode.Brake);
+        RobotMap.leftDriveFollowerOne.setNeutralMode(NeutralMode.Brake);
+        RobotMap.leftDriveFollowerTwo.setNeutralMode(NeutralMode.Brake);
     }
 }
