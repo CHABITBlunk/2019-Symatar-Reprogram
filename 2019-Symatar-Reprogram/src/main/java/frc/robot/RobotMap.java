@@ -12,12 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -32,7 +28,7 @@ public class RobotMap {
   public static int leftDriveLeadID = 7;
 
   public static int rightDriveFollowerOneID = 1;
-  public static int rightDriveFollowerTwoID = 2;
+  public static int rightDriveFollowerTwoID = 3;
   public static int leftDriveFollowerOneID = 6; 
   public static int leftDriveFollowerTwoID = 8;
 
@@ -58,4 +54,28 @@ public class RobotMap {
   //Single and double solenoids (pistons) and their in/out values
   public static DoubleSolenoid shifters = new DoubleSolenoid(0, 1);
   public static DoubleSolenoid.Value lowGear = DoubleSolenoid.Value.kForward;
+  public static DoubleSolenoid.Value highGear = DoubleSolenoid.Value.kReverse;
+  
+  public static DoubleSolenoid rightIntakePiston = new DoubleSolenoid(2, 3);
+  public static DoubleSolenoid.Value openRightIntake = DoubleSolenoid.Value.kReverse;
+  public static DoubleSolenoid.Value closeRightIntake = DoubleSolenoid.Value.kForward;
+
+  public static DoubleSolenoid leftIntakePiston = new DoubleSolenoid(6, 7);
+  public static DoubleSolenoid.Value openLeftIntake = DoubleSolenoid.Value.kForward;
+  public static DoubleSolenoid.Value closeLeftIntake = DoubleSolenoid.Value.kReverse;
+
+  //Arrays of motors
+  public static TalonSRX[] driveMotors = {
+    leftDriveLead,
+    rightDriveLead,
+    leftDriveFollowerOne,
+    leftDriveFollowerTwo,
+    rightDriveFollowerOne,
+    rightDriveFollowerTwo
+  };
+
+  public static TalonSRX[] armMotors = {
+    leftIntake,
+    rightIntake
+  };
 }

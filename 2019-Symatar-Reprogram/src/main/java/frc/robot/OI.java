@@ -16,11 +16,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
   public static Joystick joystickOne = new Joystick(0);
-
-  public static JoystickButton armForwardIntake = new JoystickButton(joystickOne, 3);
-  public static JoystickButton armReverseIntake = new JoystickButton(joystickOne, 2);
-  public static JoystickButton armForwardShoot = new JoystickButton(joystickOne, 4);
-  public static JoystickButton armReverseShoot = new JoystickButton(joystickOne, 1);
-
-  public static JoystickButton softOuttake = new JoystickButton(joystickOne, 6);
+  public static JoystickButton intake = new JoystickButton(joystickOne, 5);
+  public static JoystickButton shift = new JoystickButton(joystickOne, 6);
+  public static JoystickButton hardOuttake = new JoystickButton(joystickOne, 1);
+  public static JoystickButton softOuttake = new JoystickButton(joystickOne, 2);
 }
