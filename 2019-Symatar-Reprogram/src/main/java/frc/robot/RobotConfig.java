@@ -1,8 +1,10 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 public class RobotConfig {
 
@@ -29,6 +31,13 @@ public class RobotConfig {
         RobotMap.rightDriveFollowerTwo.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
         RobotMap.leftDriveFollowerTwo.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
+
+        
+
+        RobotMap.armFollower.set(ControlMode.Follower, RobotMap.armMasterID);
+
+        RobotMap.armMaster.setNeutralMode(NeutralMode.Brake);
+        RobotMap.armFollower.setNeutralMode(NeutralMode.Brake);
 
         //Setting motor inversions
         RobotMap.rightDriveLead.setInverted(true);
@@ -61,6 +70,7 @@ public class RobotConfig {
         RobotMap.rightDriveLead.configOpenloopRamp(0.0, 0);
         RobotMap.leftDriveLead.configOpenloopRamp(0.0, 0);
         setDriveMotorsCoast();
+        RobotMap.armBrake.set(RobotMap.engageBrake);
     }
 
     public static void setDriveMotorsCoast() {

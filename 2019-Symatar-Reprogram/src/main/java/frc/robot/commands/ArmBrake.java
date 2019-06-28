@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.RobotMap;
@@ -24,10 +26,16 @@ public class ArmBrake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.aButton.get() || OI.yButton.get()) {
+    if (OI.aButton.get()) {
       RobotMap.armBrake.set(RobotMap.disengageBrake);
-    } else if (!OI.aButton.get() || !OI.yButton.get()) {
+      RobotMap.armMaster.set(ControlMode.PercentOutput, -0.20);
+    } else if (OI.yButton.get()) {
+      RobotMap.armBrake.set(RobotMap.disengageBrake);
+      RobotMap.armMaster.set(ControlMode.PercentOutput, 0.20);
+    }
+    else if (!OI.aButton.get() || !OI.yButton.get()) {
       RobotMap.armBrake.set(RobotMap.engageBrake);
+      RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
     }
   }
 

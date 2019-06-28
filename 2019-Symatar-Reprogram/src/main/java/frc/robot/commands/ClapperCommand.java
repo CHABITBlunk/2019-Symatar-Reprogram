@@ -8,12 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.RobotMap;
+import frc.robot.*;
 
-public class ArmClose extends Command {
+public class ClapperCommand extends Command {
 
-  public ArmClose() {
+  public ClapperCommand() {
+    requires(Robot.clapper);
   }
 
   // Called just before this Command runs the first time
@@ -25,13 +25,13 @@ public class ArmClose extends Command {
   @Override
   protected void execute() {
     if (OI.bButton.get()) {
-      RobotMap.rightIntakePiston.set(RobotMap.closeRightIntake);
-      RobotMap.leftIntakePiston.set(RobotMap.closeLeftIntake);
+      Robot.clapper.openClapper();
     }
     else {
-      RobotMap.rightIntakePiston.set(RobotMap.openRightIntake);
-      RobotMap.leftIntakePiston.set(RobotMap.openLeftIntake);
+      Robot.clapper.closeClapper();
     }
+    Robot.clapper.outtake();
+    Robot.clapper.intake();
   }
 
   // Make this return true when this Command no longer needs to run execute()

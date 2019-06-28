@@ -20,8 +20,6 @@ public class ArcadeDrive extends Command {
 	private double rightPower;
 	private boolean highGear = false;;
 	public ArcadeDrive() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 	}
 
 	// Called just before this Command runs the first time

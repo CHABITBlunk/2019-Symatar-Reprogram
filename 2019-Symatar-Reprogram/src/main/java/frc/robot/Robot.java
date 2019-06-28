@@ -14,9 +14,11 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public ArcadeDrive driveTrain;
   public RobotConfig config = new RobotConfig();
-  public ArmClose armClose;
+  public ClapperCommand clapperCommand;
   public static StopMotors stopMotors = new StopMotors();
   public ArmBrake armBrake;
+  public static Clapper clapper = new Clapper();
+  public static Pneumatics pneumatics = new Pneumatics();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -27,7 +29,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     driveTrain = new ArcadeDrive();
-    armClose = new ArmClose();
+    clapperCommand = new ClapperCommand();
     armBrake = new ArmBrake();
   }
 
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
     }
     config.teleopConfig();
     driveTrain.start();
-    armClose.start();
+    clapperCommand.start();
     armBrake.start();
   }
 
@@ -90,12 +92,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    if (OI.pilotController.getRawAxis(3) >= 0.5) {
-      new Outtake().start();
-    }
-    if (OI.pilotController.getRawAxis(2) >= 0.5) {
-      new Intake().start();
-    }
+    System.out.println();
   }
 
   /**

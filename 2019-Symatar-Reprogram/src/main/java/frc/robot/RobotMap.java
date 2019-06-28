@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -35,6 +37,14 @@ public class RobotMap {
 
   public static int leftIntakeID = 9;
   public static int rightIntakeID = 10;
+
+  public static int armMasterID = 5;
+  public static int armFollowerID = 4;
+
+  //Arm limit switch
+  public static AnalogInput analog = new AnalogInput(0);
+  public static DigitalInput armLimit = new DigitalInput(0);
+
   //TalonSRX
   public static TalonSRX leftDriveLead = new TalonSRX(leftDriveLeadID);
   public static TalonSRX rightDriveLead = new TalonSRX(rightDriveLeadID);
@@ -45,6 +55,9 @@ public class RobotMap {
 
   public static TalonSRX leftIntake = new TalonSRX(leftIntakeID);
   public static TalonSRX rightIntake = new TalonSRX(rightIntakeID);
+
+  public static TalonSRX armMaster = new TalonSRX(armMasterID);
+  public static TalonSRX armFollower = new TalonSRX(armFollowerID);
 
   //navX
   public static AHRS navx = new AHRS(I2C.Port.kMXP);
@@ -79,8 +92,26 @@ public class RobotMap {
     rightDriveFollowerTwo
   };
 
-  public static TalonSRX[] armMotors = {
+  public static TalonSRX[] intakeMotors = {
     leftIntake,
     rightIntake
+  };
+
+  public static TalonSRX[] armMotors = {
+    armMaster,
+    armFollower
+  };
+
+  public static TalonSRX[] allMotors = {
+    leftDriveLead,
+    rightDriveLead,
+    leftDriveFollowerOne,
+    leftDriveFollowerTwo,
+    rightDriveFollowerOne,
+    rightDriveFollowerTwo,
+    leftIntake,
+    rightIntake,
+    armMaster,
+    armFollower
   };
 }
