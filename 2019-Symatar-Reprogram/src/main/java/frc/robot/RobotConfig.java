@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 public class RobotConfig {
 
@@ -14,6 +13,8 @@ public class RobotConfig {
     public static double wheelDiam = 6.0;
     public static double wheelCircum = Math.PI * wheelDiam;
     public static double voltageControlMax = 11.0;
+    public static int armMaxEncoderTicks = -2100;
+    public static int armStartEncoderTicks = -722;
     public static int driveMotorContinuousCurrent = 1;
     public static int driveMotorPeakCurrent = 60;
     public static int driveMotorPeakCurrentDuration = 100;
@@ -30,14 +31,22 @@ public class RobotConfig {
         RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.rightDriveFollowerTwo.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
-        RobotMap.leftDriveFollowerTwo.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
-
-        
+        RobotMap.leftDriveFollowerTwo.set(ControlMode.Follower, RobotMap.leftDriveLeadID);        
 
         RobotMap.armFollower.set(ControlMode.Follower, RobotMap.armMasterID);
 
         RobotMap.armMaster.setNeutralMode(NeutralMode.Brake);
         RobotMap.armFollower.setNeutralMode(NeutralMode.Brake);
+
+        RobotMap.armMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        RobotMap.armMaster.setSelectedSensorPosition(0, 0, 0);
+        RobotMap.armMaster.getSensorCollection().setAnalogPosition(0, 0);
+        RobotMap.armMaster.setSensorPhase(true);
+
+        RobotMap.armMaster.configNominalOutputForward(0, 10);
+        RobotMap.armMaster.configNominalOutputReverse(0, 10);
+        RobotMap.armMaster.configPeakOutputForward(1, 10);
+        RobotMap.armMaster.configPeakOutputReverse(-1, 10);
 
         //Setting motor inversions
         RobotMap.rightDriveLead.setInverted(true);

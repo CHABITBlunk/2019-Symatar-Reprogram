@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.utility.DPadButton;
+import frc.utility.DPadButton.Direction;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,4 +23,12 @@ public class OI {
   public static JoystickButton bButton = new JoystickButton(pilotController, 2);
   public static JoystickButton yButton = new JoystickButton(pilotController, 4);
   public static JoystickButton aButton = new JoystickButton(pilotController, 1);
+  public static DPadButton up = new DPadButton(pilotController, Direction.UP);
+  public static DPadButton upRight = new DPadButton(pilotController, Direction.UP_RIGHT);
+  public static DPadButton upLeft = new DPadButton(pilotController, Direction.UP_LEFT);
+  public static DPadButton left = new DPadButton(pilotController, Direction.LEFT);
+  public static DPadButton right = new DPadButton(pilotController, Direction.RIGHT);
+  public static DPadButton down = new DPadButton(pilotController, Direction.DOWN);
+  public static DPadButton downLeft = new DPadButton(pilotController, Direction.DOWN_LEFT);
+  public static DPadButton downRight = new DPadButton(pilotController, Direction.DOWN_RIGHT);
 }

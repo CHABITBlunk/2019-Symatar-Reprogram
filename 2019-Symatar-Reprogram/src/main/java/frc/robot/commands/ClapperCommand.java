@@ -13,7 +13,7 @@ import frc.robot.*;
 public class ClapperCommand extends Command {
 
   public ClapperCommand() {
-    requires(Robot.clapper);
+    requires(RobotMap.clapper);
   }
 
   // Called just before this Command runs the first time
@@ -25,13 +25,13 @@ public class ClapperCommand extends Command {
   @Override
   protected void execute() {
     if (OI.bButton.get()) {
-      Robot.clapper.openClapper();
+      RobotMap.clapper.openClapper();
     }
     else {
-      Robot.clapper.closeClapper();
+      RobotMap.clapper.closeClapper();
     }
-    Robot.clapper.outtake();
-    Robot.clapper.intake();
+    RobotMap.clapper.outtake();
+    RobotMap.clapper.intake();
   }
 
   // Make this return true when this Command no longer needs to run execute()

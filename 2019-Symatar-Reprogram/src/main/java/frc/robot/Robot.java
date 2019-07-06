@@ -17,7 +17,6 @@ public class Robot extends TimedRobot {
   public ClapperCommand clapperCommand;
   public static StopMotors stopMotors = new StopMotors();
   public ArmBrake armBrake;
-  public static Clapper clapper = new Clapper();
   public static Pneumatics pneumatics = new Pneumatics();
 
   Command m_autonomousCommand;
@@ -26,7 +25,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     driveTrain = new ArcadeDrive();
     clapperCommand = new ClapperCommand();
@@ -50,14 +48,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-
-    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
@@ -92,8 +82,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    System.out.println();
-  }
+    }
 
   /**
    * This function is called periodically during test mode.
