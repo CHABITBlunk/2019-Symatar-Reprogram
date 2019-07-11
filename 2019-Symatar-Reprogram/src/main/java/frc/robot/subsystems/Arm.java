@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,17 +5,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
 
-/**
- * Add your docs here.
- */
 public class Arm extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 
   public void disengageBrake() {
@@ -33,21 +19,39 @@ public class Arm extends Subsystem {
     RobotMap.armBrake.set(RobotMap.engageBrake);
   }
 
-  public void armMoveForward() {
+  public void moveFwd(boolean[] limSwitches) {
+    if (limSwitches[0]) {
       disengageBrake();
       RobotMap.armMaster.set(ControlMode.PercentOutput, 0.2);
-      if (RobotMap.armLimit.get()) {
-        engageBrake();
-        RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
-      }
-  }
-
-  public void armMoveBackward() {
-    disengageBrake();
-    RobotMap.armMaster.set(ControlMode.PercentOutput, -0.2);
-    if (RobotMap.armLimit.get()) {
+    } else {
       engageBrake();
       RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
     }
+  }
+
+  public boolean[] limitSwitchesStatus() {
+    boolean fwd = true;
+    boolean rev = true;
+    if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
+      fwd = false;
+    }
+    else if (RobotMap.armMaster.getSensorCollection().isFwdLimitSwitchClosed()) {
+      rev = false;
+    }
+    return new boolean[] {fwd, rev};
+  }
+
+  public void moveRev(boolean[] limSwitches) {
+    if (limSwitches[1]) {
+      disengageBrake();
+      RobotMap.armMaster.set(ControlMode.PercentOutput, -0.2);
+    } else {
+      engageBrake();
+      RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
+  public void stopMotors() {
+    RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
   }
 }

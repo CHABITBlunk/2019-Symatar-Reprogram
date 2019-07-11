@@ -10,11 +10,11 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.RobotMap;
+import frc.robot.*;
 
-public class ArmBrake extends Command {
-  public ArmBrake() {
+public class ManualArm extends Command {
+
+  public ManualArm() {
     
   }
 
@@ -27,15 +27,13 @@ public class ArmBrake extends Command {
   @Override
   protected void execute() {
     if (OI.aButton.get()) {
-      RobotMap.armBrake.set(RobotMap.disengageBrake);
-      RobotMap.armMaster.set(ControlMode.PercentOutput, -0.20);
-    } else if (OI.yButton.get()) {
-      RobotMap.armBrake.set(RobotMap.disengageBrake);
-      RobotMap.armMaster.set(ControlMode.PercentOutput, 0.20);
+      RobotMap.arm.moveRev(RobotMap.arm.limitSwitchesStatus());
     }
-    else if (!OI.aButton.get() || !OI.yButton.get()) {
-      RobotMap.armBrake.set(RobotMap.engageBrake);
-      RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
+    if (OI.yButton.get()) {
+      RobotMap.arm.moveFwd(RobotMap.arm.limitSwitchesStatus());
+    } else if (!OI.aButton.get() && !OI.yButton.get()) {
+      RobotMap.arm.stopMotors();
+      RobotMap.arm.engageBrake();
     }
   }
 

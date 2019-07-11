@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
 
-public class ManualArmControl extends Command {
+public class MotionProfiledArmControl extends Command {
   private MPArm mpArm;
-  public ManualArmControl() {
+  public MotionProfiledArmControl() {
   }
 
   // Called just before this Command runs the first time
@@ -26,20 +26,23 @@ public class ManualArmControl extends Command {
       RobotMap.armMaster.getSensorCollection().setQuadraturePosition(0, RobotConfig.timeOut);
     }
 
-    if (OI.left.get()) {
-      mpArm = new MPArm(0);
-      mpArm.start();
-    }
-    if (OI.right.get()) {
-      mpArm = new MPArm(180);
-      mpArm.start();
-    }
-    if (OI.upLeft.get()) {
-      mpArm = new MPArm(60);
-      mpArm.start();
-    }
-    if (OI.upRight.get()) {
-      mpArm = new MPArm(120);
+    if (OI.pilotController.getPOV() != -1) {
+      switch (OI.pilotController.getPOV()) {
+        case 45:
+          mpArm = new MPArm(60);
+          break;
+        case 135:
+          mpArm = new MPArm(120);
+          break;
+        case 0:
+          mpArm = new MPArm(0);
+          break;
+        case 180:
+          mpArm = new MPArm(180);
+          break;
+        default:
+        break;
+      }
       mpArm.start();
     }
   }

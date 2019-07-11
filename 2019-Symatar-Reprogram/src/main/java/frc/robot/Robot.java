@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
   public RobotConfig config = new RobotConfig();
   public ClapperCommand clapperCommand;
   public static StopMotors stopMotors = new StopMotors();
-  public ArmBrake armBrake;
+  public ManualArm manualArm;
   public static Pneumatics pneumatics = new Pneumatics();
 
   Command m_autonomousCommand;
@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", m_chooser);
     driveTrain = new ArcadeDrive();
     clapperCommand = new ClapperCommand();
-    armBrake = new ArmBrake();
+    manualArm = new ManualArm();
   }
 
   @Override
@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
     config.teleopConfig();
     driveTrain.start();
     clapperCommand.start();
-    armBrake.start();
+    manualArm.start();
   }
 
   /**

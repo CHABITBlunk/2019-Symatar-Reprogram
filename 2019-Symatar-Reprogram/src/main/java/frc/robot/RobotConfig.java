@@ -42,7 +42,7 @@ public class RobotConfig {
         RobotMap.armMaster.setSelectedSensorPosition(0, 0, 0);
         RobotMap.armMaster.getSensorCollection().setAnalogPosition(0, 0);
         RobotMap.armMaster.setSensorPhase(true);
-
+        
         RobotMap.armMaster.configNominalOutputForward(0, 10);
         RobotMap.armMaster.configNominalOutputReverse(0, 10);
         RobotMap.armMaster.configPeakOutputForward(1, 10);
