@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
 
@@ -19,14 +18,9 @@ public class Arm extends Subsystem {
     RobotMap.armBrake.set(RobotMap.engageBrake);
   }
 
-  public void moveFwd(boolean[] limSwitches) {
-    if (limSwitches[0]) {
-      disengageBrake();
-      RobotMap.armMaster.set(ControlMode.PercentOutput, 0.2);
-    } else {
-      engageBrake();
-      RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
-    }
+  public void moveFwd() {
+    disengageBrake();
+    RobotMap.armMaster.set(ControlMode.PercentOutput, -0.08);
   }
 
   public boolean[] limitSwitchesStatus() {
@@ -41,17 +35,16 @@ public class Arm extends Subsystem {
     return new boolean[] {fwd, rev};
   }
 
-  public void moveRev(boolean[] limSwitches) {
-    if (limSwitches[1]) {
-      disengageBrake();
-      RobotMap.armMaster.set(ControlMode.PercentOutput, -0.2);
-    } else {
-      engageBrake();
-      RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
-    }
+  public void moveRev() {
+    disengageBrake();
+    RobotMap.armMaster.set(ControlMode.PercentOutput, 0.08);
   }
 
   public void stopMotors() {
     RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void setPower(double power) {
+    RobotMap.armMaster.set(ControlMode.PercentOutput, power);
   }
 }

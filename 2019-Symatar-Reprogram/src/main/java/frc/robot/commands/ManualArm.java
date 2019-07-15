@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
 
@@ -27,10 +25,10 @@ public class ManualArm extends Command {
   @Override
   protected void execute() {
     if (OI.aButton.get()) {
-      RobotMap.arm.moveRev(RobotMap.arm.limitSwitchesStatus());
+      RobotMap.arm.moveRev();
     }
     if (OI.yButton.get()) {
-      RobotMap.arm.moveFwd(RobotMap.arm.limitSwitchesStatus());
+      RobotMap.arm.moveFwd();
     } else if (!OI.aButton.get() && !OI.yButton.get()) {
       RobotMap.arm.stopMotors();
       RobotMap.arm.engageBrake();

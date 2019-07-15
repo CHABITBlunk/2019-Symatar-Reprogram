@@ -1,71 +1,84 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.PID;
-import frc.robot.RobotConfig;
-import frc.robot.RobotMap;
+import frc.robot.*;
 
 public class MPArm extends Command {
-  private double kp = 0.004;
-  private double ki = 0.000075;
-  private double kd = 0.011;
-  private PID armPid = new PID(kp, ki, kd);
-  private double endpoint;
-  private double currentPosition;
-  private double startTime;
 
-  public MPArm(double angle) {
-    endpoint = angle;
-    requires(RobotMap.arm);
-    armPid.setMaxOutput(0.3);
-    armPid.setMinOutput(-0.3);
-    setInterruptible(true);
-  }
+  private double endpoint;
+	public static double currentAngle;
+	private double startingAngle;
+	private int run;
+	private int angleTolerance;
+	private double crateMultiplier = 0.25;
+	private double startTime;
+	private double minPower = 0.280;
+	private double cosMultiplier = 0.122;
+	public MPArm(double angle, int tolerance) {
+    	endpoint = angle;
+    	angleTolerance = tolerance; 	
+    	crateMultiplier = 0;
+    }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     startTime = Timer.getFPGATimestamp();
-    armPid.setSetPoint(endpoint);
-
-    if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
-      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(RobotConfig.armMaxEncoderTicks, 0);
-    }
-    if (RobotMap.armMaster.getSensorCollection().isFwdLimitSwitchClosed()) {
-      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(0, 0);
-    }
-    currentPosition = -(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() / 2048.0) * 180;
-    armPid.updatePID(currentPosition);
+    startingAngle = -(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() / 2048.0) * 180;
+    run = 0;
+    RobotMap.arm.disengageBrake();
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.armMaster.set(ControlMode.PercentOutput, -armPid.getResult());
-    currentPosition = -(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() / 2048.0) * 180;
-    armPid.updatePID(currentPosition);
+    if (RobotMap.armMaster.getSensorCollection().isFwdLimitSwitchClosed()) {
+      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(RobotConfig.armMaxEncoderTicks, RobotConfig.timeOut);
+    }
+    if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
+      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(0, RobotConfig.timeOut);
+    }
+    currentAngle = -(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() / 2048.0) * 180;
+
+    if (startingAngle < endpoint) {
+      if (currentAngle + angleTolerance < endpoint) {
+        System.out.println("Power: " + -minPower + crateMultiplier * (-cosMultiplier * Math.cos((-currentAngle * Math.PI) / 180)));
+        //RobotMap.arm.setPower(-minPower + crateMultiplier * (-cosMultiplier * Math.cos((-currentAngle * Math.PI) / 180)));
+      } else {
+        run++;
+        RobotMap.arm.engageBrake();
+        RobotMap.arm.stopMotors();
+      }
+    } else if (startingAngle > endpoint) {
+      if (currentAngle - angleTolerance > endpoint) {
+        System.out.println("Power: " + minPower + crateMultiplier * (-cosMultiplier * Math.cos((-currentAngle * Math.PI) / 180)));
+        //RobotMap.arm.setPower(minPower + crateMultiplier * (-cosMultiplier * Math.cos((-currentAngle * Math.PI) / 180)));
+      } else {
+        run++;
+        RobotMap.arm.engageBrake();
+        RobotMap.arm.stopMotors();
+      }
+    }
+    System.out.println("Is finished: " + isFinished());
+    System.out.println("Current angle: " + currentAngle);
+    System.out.println("Quadrature position: " + RobotMap.armMaster.getSensorCollection().getQuadraturePosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(currentPosition - endpoint) < 5 || (Timer.getFPGATimestamp() - startTime) > 5;
+    return (RobotMap.armMaster.getMotorOutputPercent() == 0 && run != 0) || (Math.abs(Timer.getFPGATimestamp() - startTime) > 5.00) || (OI.xButton.get() || OI.aButton.get() || OI.yButton.get() || OI.bButton.get() && Math.abs(Timer.getFPGATimestamp() - startTime) > 0.25);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
-    RobotMap.armBrake.set(RobotMap.engageBrake);
+    RobotMap.arm.engageBrake();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
-import frc.robot.commands.*;
 
 public class Clapper extends Subsystem {
 
@@ -22,13 +24,17 @@ public class Clapper extends Subsystem {
   
   public void outtake() {
     if (OI.pilotController.getRawAxis(3) >= 0.5) {
-      new Outtake().start();
+      for (TalonSRX talon : RobotMap.intakeMotors) {
+        talon.set(ControlMode.PercentOutput, 0.4);
+      }
     }
   }
 
   public void intake() {
     if (OI.pilotController.getRawAxis(2) >= 0.5) {
-      new Intake().start();
+      for (TalonSRX talon : RobotMap.intakeMotors) {
+        talon.set(ControlMode.PercentOutput, -0.4);
+      }
     }
   }
 }

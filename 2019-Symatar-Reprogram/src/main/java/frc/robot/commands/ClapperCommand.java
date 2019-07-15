@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
 
@@ -24,7 +25,7 @@ public class ClapperCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.bButton.get()) {
+    if (OI.startButton.get()) {
       RobotMap.clapper.openClapper();
     }
     else {
@@ -37,7 +38,7 @@ public class ClapperCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return RobotState.isOperatorControl();
   }
 
   // Called once after isFinished returns true

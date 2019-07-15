@@ -1,4 +1,4 @@
-package frc.robot.sensors;
+package frc.utility.sensors;
 
 import com.kauailabs.navx.frc.AHRS;
 

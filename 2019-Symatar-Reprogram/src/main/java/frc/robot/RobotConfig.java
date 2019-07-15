@@ -19,8 +19,10 @@ public class RobotConfig {
     public static int driveMotorPeakCurrent = 60;
     public static int driveMotorPeakCurrentDuration = 100;
     public static boolean enableDriveCurrentLimit = true;
-    public static double driverDeadZone = 0.10;
+    public static double driverDeadZone = 0.15;
     public static int timeOut = 4;
+    public static double frictionThreshold = 0.08;
+    public static double cosMultiplier = 0;
 
     public RobotConfig() {
         setStartingConfig();
@@ -57,6 +59,8 @@ public class RobotConfig {
         RobotMap.leftDriveFollowerTwo.setInverted(false);
         RobotMap.leftIntake.setInverted(false);
         RobotMap.rightIntake.setInverted(false);
+        RobotMap.armMaster.setInverted(true);
+        RobotMap.armFollower.setInverted(true);
 
         for (TalonSRX talon : RobotMap.driveMotors) {
             talon.configContinuousCurrentLimit(driveMotorContinuousCurrent, timeOut);

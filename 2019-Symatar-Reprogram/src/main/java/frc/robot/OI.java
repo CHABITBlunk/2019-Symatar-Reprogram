@@ -21,4 +21,6 @@ public class OI {
   public static JoystickButton bButton = new JoystickButton(pilotController, 2);
   public static JoystickButton yButton = new JoystickButton(pilotController, 4);
   public static JoystickButton aButton = new JoystickButton(pilotController, 1);
+  public static JoystickButton xButton = new JoystickButton(pilotController, 3);
+  public static JoystickButton startButton = new JoystickButton(pilotController, 8);
 }

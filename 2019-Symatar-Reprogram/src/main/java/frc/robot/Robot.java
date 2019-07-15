@@ -12,12 +12,12 @@ import frc.robot.universalcommands.*;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public ArcadeDrive driveTrain;
+  public ArcadeDrive driveTrain = new ArcadeDrive();
   public RobotConfig config = new RobotConfig();
-  public ClapperCommand clapperCommand;
   public static StopMotors stopMotors = new StopMotors();
-  public ManualArm manualArm;
-  public static Pneumatics pneumatics = new Pneumatics();
+  public ManualArm manualArm = new ManualArm();
+  public ClapperCommand clapperCommand = new ClapperCommand();
+  public TeleopArmControl teleopArm = new TeleopArmControl();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -26,9 +26,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
     SmartDashboard.putData("Auto mode", m_chooser);
-    driveTrain = new ArcadeDrive();
-    clapperCommand = new ClapperCommand();
-    manualArm = new ManualArm();
   }
 
   @Override
@@ -73,7 +70,7 @@ public class Robot extends TimedRobot {
     config.teleopConfig();
     driveTrain.start();
     clapperCommand.start();
-    manualArm.start();
+    teleopArm.start();
   }
 
   /**
@@ -82,7 +79,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    }
+  }
 
   /**
    * This function is called periodically during test mode.
