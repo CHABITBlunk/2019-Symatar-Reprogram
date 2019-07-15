@@ -10,13 +10,11 @@ public class TeleopArmControl extends Command {
   public TeleopArmControl() {
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     mpArm = new MPArm(60, 0);
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     if (!mpArm.isRunning()) {
@@ -36,19 +34,15 @@ public class TeleopArmControl extends Command {
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();

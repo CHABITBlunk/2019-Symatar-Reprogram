@@ -14,14 +14,14 @@ public class MPArm extends Command {
 	private double crateMultiplier = 0.25;
 	private double startTime;
 	private double minPower = 0.280;
-	private double cosMultiplier = 0.122;
+  private double cosMultiplier = 0.122;
+  
 	public MPArm(double angle, int tolerance) {
     	endpoint = angle;
     	angleTolerance = tolerance; 	
     	crateMultiplier = 0;
     }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     startTime = Timer.getFPGATimestamp();
@@ -64,20 +64,16 @@ public class MPArm extends Command {
     System.out.println("Quadrature position: " + RobotMap.armMaster.getSensorCollection().getQuadraturePosition());
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return (RobotMap.armMaster.getMotorOutputPercent() == 0 && run != 0) || (Math.abs(Timer.getFPGATimestamp() - startTime) > 5.00) || (OI.xButton.get() || OI.aButton.get() || OI.yButton.get() || OI.bButton.get() && Math.abs(Timer.getFPGATimestamp() - startTime) > 0.25);
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
     RobotMap.arm.engageBrake();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }

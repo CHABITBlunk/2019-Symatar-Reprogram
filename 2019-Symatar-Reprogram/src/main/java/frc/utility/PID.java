@@ -9,14 +9,13 @@ public class PID {
 	private double IValue;
 	private double DValue;
 
-	// Dictates the inputs and outputs
 	private double maxInput;
 	private double minInput;
-	private double maxOutput = 1 ;// defaults to 100% and -100% motor power
+	private double maxOutput = 1;
 	private double minOutput = -1;
 
-	private boolean continuous = false; // only for absolute encoders
-	private double setPoint; // this will be set continuously
+	private boolean continuous = false; 
+	private double setPoint; 
 	private double output;
 	private double result;
 	
