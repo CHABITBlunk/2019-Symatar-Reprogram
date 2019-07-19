@@ -13,7 +13,6 @@ public class ArcadeDrive extends Command {
 	private double deadZone = 0.15;
 	private double turn = 0;
 	private double throttle = 0;
-	private double povValue;
 	private double ratio = 0;
 	private double sensitivity;
 	private double leftPower;
@@ -30,7 +29,6 @@ public class ArcadeDrive extends Command {
 	protected void execute() {
 		throttle = OI.pilotController.getRawAxis(1)*0.5; 
 		ratio = Math.abs(throttle);
-		povValue = OI.pilotController.getPOV();
 		
 		if(Math.abs(OI.pilotController.getRawAxis(4))>deadZone) {	
 			turn = OI.pilotController.getRawAxis(4);

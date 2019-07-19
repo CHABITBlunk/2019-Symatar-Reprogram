@@ -25,14 +25,21 @@ public class ClapperCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (OI.pilotController.getRawAxis(3) >= 0.5) {
+      System.out.println("Checking if code gets to the outtake");
+      RobotMap.clapper.outtake();
+    }
+    if (OI.pilotController.getRawAxis(2) >= 0.5) {
+      System.out.println("Checking if code gets to the intake");
+      RobotMap.clapper.intake();
+    }
     if (OI.startButton.get()) {
+      System.out.println("Checking if code gets to the open clapper part");
       RobotMap.clapper.openClapper();
     }
-    else {
+    else{
       RobotMap.clapper.closeClapper();
     }
-    RobotMap.clapper.outtake();
-    RobotMap.clapper.intake();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
 
@@ -12,35 +13,45 @@ public class TeleopArmControl extends Command {
 
   @Override
   protected void initialize() {
-    mpArm = new MPArm(60, 0);
+    mpArm = new MPArm(60, 15);
+    mpArm.start();
   }
 
   @Override
   protected void execute() {
-    if (!mpArm.isRunning()) {
-      if (OI.bButton.get()) {
-        mpArm = new MPArm(0, 0);
-      }
-      if (OI.xButton.get()) {
-        mpArm = new MPArm(180, 0);
-      }
-      if (OI.aButton.get()) {
-        mpArm = new MPArm(60, 15);
-      }
-      if (OI.yButton.get()) {
-        mpArm = new MPArm(120, 15);
-      }
+    /* Arm button map:
+      X goes to the air-tank side in intake/vault position
+      B goes to the battery side in intake/vault position
+      A goes to the air-tank side in switch position
+      Y goes to the battery side in switch position
+    */
+
+    if (OI.bButton.get()) {
+      mpArm = new MPArm(0, 5);
+      mpArm.start();
+    }
+    if (OI.xButton.get()) {
+      mpArm = new MPArm(180, 5);
+      mpArm.start();
+    }
+    if (OI.aButton.get()) {
+      mpArm = new MPArm(60, 15);
+      mpArm.start();
+    }
+    if (OI.yButton.get()) {
+      mpArm = new MPArm(120, 15);
       mpArm.start();
     }
   }
 
   @Override
   protected boolean isFinished() {
-    return false;
+    return !RobotState.isOperatorControl();
   }
 
   @Override
   protected void end() {
+    RobotMap.arm.disengageBrake();
   }
 
   @Override

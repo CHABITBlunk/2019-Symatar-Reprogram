@@ -66,12 +66,12 @@ public class RobotMap {
   public static DoubleSolenoid.Value highGear = DoubleSolenoid.Value.kReverse;
   
   public static DoubleSolenoid rightIntakePiston = new DoubleSolenoid(2, 3);
-  public static DoubleSolenoid.Value openRightIntake = DoubleSolenoid.Value.kReverse;
-  public static DoubleSolenoid.Value closeRightIntake = DoubleSolenoid.Value.kForward;
+  public static DoubleSolenoid.Value closeRightIntake = DoubleSolenoid.Value.kReverse;
+  public static DoubleSolenoid.Value openRightIntake = DoubleSolenoid.Value.kForward;
 
   public static DoubleSolenoid leftIntakePiston = new DoubleSolenoid(6, 7);
-  public static DoubleSolenoid.Value openLeftIntake = DoubleSolenoid.Value.kForward;
-  public static DoubleSolenoid.Value closeLeftIntake = DoubleSolenoid.Value.kReverse;
+  public static DoubleSolenoid.Value closeLeftIntake = DoubleSolenoid.Value.kForward;
+  public static DoubleSolenoid.Value openLeftIntake = DoubleSolenoid.Value.kReverse;
 
   public static DoubleSolenoid armBrake = new DoubleSolenoid(4, 5);
   public static DoubleSolenoid.Value disengageBrake = Value.kReverse;

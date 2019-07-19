@@ -16,7 +16,6 @@ public class PID {
 
 	private boolean continuous = false; 
 	private double setPoint; 
-	private double output;
 	private double result;
 	
 	public PID(double kp, double ki, double kd){

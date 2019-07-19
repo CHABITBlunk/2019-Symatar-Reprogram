@@ -4,7 +4,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 public class Navx {
 
-    private double navXAngle = 0;
     private double originalAngle;
     private double originalYaw;
     private AHRS imu;
