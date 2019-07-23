@@ -1,20 +1,21 @@
-package frc.robot.commands;
+package frc.robot.commands.teleopcommands;
 
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
+import frc.robot.commands.universalcommands.PIDArm;
 
 public class TeleopArmControl extends Command {
 
-  private MPArm mpArm;
+  private PIDArm mpArm;
+  ArmSequence armSeq = new ArmSequence();
 
   public TeleopArmControl() {
   }
 
   @Override
   protected void initialize() {
-    mpArm = new MPArm(60, 15);
-    mpArm.start();
+    armSeq.start();
   }
 
   @Override
@@ -25,21 +26,20 @@ public class TeleopArmControl extends Command {
       A goes to the air-tank side in switch position
       Y goes to the battery side in switch position
     */
-
     if (OI.bButton.get()) {
-      mpArm = new MPArm(0, 5);
+      mpArm = new PIDArm(0);
       mpArm.start();
     }
     if (OI.xButton.get()) {
-      mpArm = new MPArm(180, 5);
+      mpArm = new PIDArm(180);
       mpArm.start();
     }
     if (OI.aButton.get()) {
-      mpArm = new MPArm(60, 15);
+      mpArm = new PIDArm(60);
       mpArm.start();
     }
     if (OI.yButton.get()) {
-      mpArm = new MPArm(120, 15);
+      mpArm = new PIDArm(120);
       mpArm.start();
     }
   }
@@ -51,7 +51,8 @@ public class TeleopArmControl extends Command {
 
   @Override
   protected void end() {
-    RobotMap.arm.disengageBrake();
+    RobotMap.arm.setPower(0);
+    RobotMap.arm.engageBrake();
   }
 
   @Override

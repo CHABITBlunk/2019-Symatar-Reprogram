@@ -89,5 +89,13 @@ public class PID {
 		}
 		return input;
 	}
-	
+	public double getError() {
+		return error;
+	}
+	public double getMinOutput() {
+		return minOutput;
+	}
+	public double getMaxOutput() {
+		return maxOutput;
+	}
 }

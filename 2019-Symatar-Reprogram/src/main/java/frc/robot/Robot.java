@@ -2,14 +2,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.*;
-import frc.robot.universalcommands.*;
+import frc.robot.commands.teleopcommands.*;
+import frc.robot.commands.universalcommands.*;
 
 public class Robot extends TimedRobot {
   public ArcadeDrive driveTrain = new ArcadeDrive();
   public RobotConfig config = new RobotConfig();
   public static StopMotors stopMotors = new StopMotors();
-  public ManualArm manualArm = new ManualArm();
   public ClapperCommand clapperCommand = new ClapperCommand();
   public TeleopArmControl teleopArm = new TeleopArmControl();
 

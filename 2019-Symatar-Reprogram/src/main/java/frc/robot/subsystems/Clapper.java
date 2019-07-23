@@ -27,6 +27,12 @@ public class Clapper extends Subsystem {
     }
   }
 
+  public void stopMotors() {
+    for (TalonSRX talon : RobotMap.intakeMotors) {
+      talon.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
   public void intake() {
       for (TalonSRX talon : RobotMap.intakeMotors) {
         talon.set(ControlMode.PercentOutput, -0.4);
