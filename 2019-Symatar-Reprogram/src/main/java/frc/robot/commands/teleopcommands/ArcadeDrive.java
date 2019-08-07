@@ -27,7 +27,7 @@ public class ArcadeDrive extends Command {
 
 	@Override
 	protected void execute() {
-		throttle = OI.pilotController.getRawAxis(1)*0.5; 
+		throttle = OI.pilotController.getRawAxis(1); 
 		ratio = Math.abs(throttle);
 		
 		if(Math.abs(OI.pilotController.getRawAxis(4))>deadZone) {	

@@ -7,11 +7,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class RobotConfig {
 
-    public static double gearRatio = 7.5;
+    public static double highGearEncoderToWheelRatio = 7.5;
+    public static double lowGearEncoderToWheelRatio = 7.2;
     public static double encoderTicsPerShaftRotation = 4096;
-    public static double encoderTicsPerWheelRotation = gearRatio * encoderTicsPerShaftRotation;
     public static double wheelDiam = 6.0;
     public static double wheelCircum = Math.PI * wheelDiam;
+    public static double encoderTicsPerWheelRotation = highGearEncoderToWheelRatio * encoderTicsPerShaftRotation;
     public static double voltageControlMax = 11.0;
     public static int armMaxEncoderTicks = -2100;
     public static int armStartEncoderTicks = -722;
@@ -23,6 +24,7 @@ public class RobotConfig {
     public static int timeOut = 4;
     public static double frictionThreshold = 0.08;
     public static double cosMultiplier = 0;
+    public static double encoderTicsPerInch = wheelCircum / encoderTicsPerWheelRotation;
 
     public RobotConfig() {
         setStartingConfig();
@@ -75,6 +77,11 @@ public class RobotConfig {
         RobotMap.rightDriveLead.configVoltageCompSaturation(RobotConfig.voltageControlMax, 10);
     	RobotMap.rightDriveLead.enableVoltageCompensation(false); 
         RobotMap.rightDriveLead.configVoltageMeasurementFilter(32, 10);
+
+        for (TalonSRX t : RobotMap.driveMotors) {
+            t.getSensorCollection().setQuadraturePosition(0, 0);
+            t.configPeakOutputForward(0.9, 0);
+        }
     }
 
     public void teleopConfig() {

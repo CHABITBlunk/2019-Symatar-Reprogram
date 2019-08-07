@@ -8,7 +8,7 @@ public class PIDArm extends Command {
 
   private double endpoint;
   private double kp = 0.004;
-  private double ki = 0.00005;
+  private double ki = 0.000075;
   private double kd = 0.011;
   private PID armPID = new PID(kp, ki, kd);
   private double currentAngle;

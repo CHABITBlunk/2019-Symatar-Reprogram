@@ -1,6 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -52,9 +51,6 @@ public class RobotMap {
 
   //navX
   public static AHRS navx = new AHRS(I2C.Port.kMXP);
-
-  //CANifier
-  public static CANifier canifier = new CANifier(0);
 
   //Subsystems
   public static Arm arm = new Arm();

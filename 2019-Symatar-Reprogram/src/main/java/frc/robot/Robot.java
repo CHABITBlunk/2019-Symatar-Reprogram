@@ -2,8 +2,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.teleopcommands.*;
 import frc.robot.commands.universalcommands.*;
+import frc.robot.commands.autocommands.*;
 
 public class Robot extends TimedRobot {
   public ArcadeDrive driveTrain = new ArcadeDrive();
@@ -18,6 +20,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("How far right has travelled (ft):", RobotMap.rightDriveLead.getSensorCollection().getQuadraturePosition() * RobotConfig.encoderTicsPerInch / 12);
+    SmartDashboard.putNumber("How far left has travelled (ft):", -RobotMap.leftDriveLead.getSensorCollection().getQuadraturePosition() * RobotConfig.encoderTicsPerInch / 12);
   }
 
   @Override
@@ -31,6 +35,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    new BasicAuto().start();
   }
 
   @Override

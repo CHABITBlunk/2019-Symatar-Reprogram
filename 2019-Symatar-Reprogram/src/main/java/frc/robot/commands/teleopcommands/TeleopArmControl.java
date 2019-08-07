@@ -7,15 +7,13 @@ import frc.robot.commands.universalcommands.PIDArm;
 
 public class TeleopArmControl extends Command {
 
-  private PIDArm mpArm;
-  ArmSequence armSeq = new ArmSequence();
+  private PIDArm pidArm;
 
   public TeleopArmControl() {
   }
 
   @Override
   protected void initialize() {
-    armSeq.start();
   }
 
   @Override
@@ -27,20 +25,20 @@ public class TeleopArmControl extends Command {
       Y goes to the battery side in switch position
     */
     if (OI.bButton.get()) {
-      mpArm = new PIDArm(0);
-      mpArm.start();
+      pidArm = new PIDArm(0);
+      pidArm.start();
     }
     if (OI.xButton.get()) {
-      mpArm = new PIDArm(180);
-      mpArm.start();
+      pidArm = new PIDArm(180);
+      pidArm.start();
     }
     if (OI.aButton.get()) {
-      mpArm = new PIDArm(60);
-      mpArm.start();
+      pidArm = new PIDArm(60);
+      pidArm.start();
     }
     if (OI.yButton.get()) {
-      mpArm = new PIDArm(120);
-      mpArm.start();
+      pidArm = new PIDArm(120);
+      pidArm.start();
     }
   }
 
