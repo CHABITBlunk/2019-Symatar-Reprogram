@@ -23,11 +23,8 @@ public class MotionMagicMove extends Command {
   private int accelerationRight;
   private double initCruiseVelocityLeft = cruiseVelocityLeft;
   private double initCruiseVelocityRight = cruiseVelocityRight;
-  private double startAngle;
   private double desiredAngle;
   private double endpoint;
-  private double pGainLeft;
-  private double pGainRight;
 
 
   public MotionMagicMove(double dist, double angle, double cruiseVelocity, int acceleration) {
@@ -38,12 +35,11 @@ public class MotionMagicMove extends Command {
     accelerationLeft = acceleration;
     accelerationRight = acceleration;
     endpoint = dist;
-    motionMagicEndPoint = ((-endpoint / RobotConfig.wheelCircum) * RobotConfig.encoderTicsPerWheelRotation);
+    motionMagicEndPoint = ((-endpoint / Constants.wheelCircum) * Constants.encoderTicsPerWheelRotation);
     fGainLeft = 0.132404f;
     fGainRight = fGainLeft - 0.0185f;
-    pGainLeft = 0;
-    pGainRight = 0;
     desiredAngle = angle;
+    requires(RobotMap.driveTrain);
   }
 
   @Override
@@ -75,8 +71,6 @@ public class MotionMagicMove extends Command {
     RobotMap.rightDriveLead.configMotionAcceleration(accelerationRight * 4096 / 600, 0);
     RobotMap.leftDriveLead.configMotionAcceleration(accelerationLeft * 4096 / 600, 0);
     
-    startAngle = RobotMap.navx.getAngle();
-
     for (TalonSRX t : RobotMap.driveMotors) {
       t.enableVoltageCompensation(true);
     }
@@ -112,8 +106,8 @@ public class MotionMagicMove extends Command {
     for (TalonSRX t : RobotMap.driveMotors) {
       t.enableVoltageCompensation(false);
     }
-    SmartDashboard.putNumber("How far right has travelled (ft):", RobotMap.rightDriveLead.getSensorCollection().getQuadraturePosition() * RobotConfig.encoderTicsPerInch / 12);
-    SmartDashboard.putNumber("How far left has travelled (ft):", RobotMap.leftDriveLead.getSensorCollection().getQuadraturePosition() * RobotConfig.encoderTicsPerInch / 12);
+    SmartDashboard.putNumber("How far right has travelled (ft):", RobotMap.rightDriveLead.getSensorCollection().getQuadraturePosition() * Constants.encoderTicsPerInch / 12);
+    SmartDashboard.putNumber("How far left has travelled (ft):", RobotMap.leftDriveLead.getSensorCollection().getQuadraturePosition() * Constants.encoderTicsPerInch / 12);
   }
 
   @Override

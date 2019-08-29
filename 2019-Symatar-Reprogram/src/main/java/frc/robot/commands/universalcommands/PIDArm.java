@@ -24,10 +24,10 @@ public class PIDArm extends Command {
   @Override
   protected void initialize() {
     if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
-      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(RobotConfig.armMaxEncoderTicks, RobotConfig.timeOut);
+      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(Constants.armMaxEncoderTicks, Constants.timeOut);
     }
     if (RobotMap.armMaster.getSensorCollection().isFwdLimitSwitchClosed()) {
-      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(0, RobotConfig.timeOut);
+      RobotMap.armMaster.getSensorCollection().setQuadraturePosition(0, Constants.timeOut);
     }
     currentAngle = -(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() / 2048.0) * 180;
     RobotMap.arm.disengageBrake();
@@ -48,8 +48,7 @@ public class PIDArm extends Command {
 
   @Override
   protected void end() {
-    RobotMap.arm.stopMotors();
-    RobotMap.arm.engageBrake();
+    RobotMap.arm.stop();
   }
 
   // Called when another command which requires one or more of the same

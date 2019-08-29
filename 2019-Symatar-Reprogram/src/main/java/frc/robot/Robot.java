@@ -12,7 +12,6 @@ public class Robot extends TimedRobot {
   public RobotConfig config = new RobotConfig();
   public static StopMotors stopMotors = new StopMotors();
   public ClapperCommand clapperCommand = new ClapperCommand();
-  public TeleopArmControl teleopArm = new TeleopArmControl();
 
   @Override
   public void robotInit() {
@@ -20,8 +19,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("How far right has travelled (ft):", RobotMap.rightDriveLead.getSensorCollection().getQuadraturePosition() * RobotConfig.encoderTicsPerInch / 12);
-    SmartDashboard.putNumber("How far left has travelled (ft):", -RobotMap.leftDriveLead.getSensorCollection().getQuadraturePosition() * RobotConfig.encoderTicsPerInch / 12);
   }
 
   @Override
@@ -48,11 +45,14 @@ public class Robot extends TimedRobot {
     config.teleopConfig();
     driveTrain.start();
     clapperCommand.start();
-    teleopArm.start();
   }
 
   @Override
   public void teleopPeriodic() {
+    OI.xButton.whenPressed(new MotionMagicArm(0));
+    OI.bButton.whenPressed(new MotionMagicArm(Constants.armMaxEncoderTicks));
+    OI.aButton.whenPressed(new MotionMagicArm(Constants.fwdSwitchPreset));
+    OI.yButton.whenPressed(new MotionMagicArm(Constants.revSwitchPreset));
     Scheduler.getInstance().run();
   }
 

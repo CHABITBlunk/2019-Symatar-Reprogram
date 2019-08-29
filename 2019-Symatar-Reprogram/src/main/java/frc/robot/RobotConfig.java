@@ -7,42 +7,23 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class RobotConfig {
 
-    public static double highGearEncoderToWheelRatio = 7.5;
-    public static double lowGearEncoderToWheelRatio = 7.2;
-    public static double encoderTicsPerShaftRotation = 4096;
-    public static double wheelDiam = 6.0;
-    public static double wheelCircum = Math.PI * wheelDiam;
-    public static double encoderTicsPerWheelRotation = highGearEncoderToWheelRatio * encoderTicsPerShaftRotation;
-    public static double voltageControlMax = 11.0;
-    public static int armMaxEncoderTicks = -2100;
-    public static int armStartEncoderTicks = -722;
-    public static int driveMotorContinuousCurrent = 1;
-    public static int driveMotorPeakCurrent = 60;
-    public static int driveMotorPeakCurrentDuration = 100;
-    public static boolean enableDriveCurrentLimit = true;
-    public static double driverDeadZone = 0.15;
-    public static int timeOut = 4;
-    public static double frictionThreshold = 0.08;
-    public static double cosMultiplier = 0;
-    public static double encoderTicsPerInch = wheelCircum / encoderTicsPerWheelRotation;
-
     public RobotConfig() {
         setStartingConfig();
     }
 
     public void setStartingConfig() {
         //Setting master-slave motors
-        RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
-        RobotMap.rightDriveFollowerTwo.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
-        RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
-        RobotMap.leftDriveFollowerTwo.set(ControlMode.Follower, RobotMap.leftDriveLeadID);        
+        RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, Constants.rightDriveLeadID);
+        RobotMap.rightDriveFollowerTwo.set(ControlMode.Follower, Constants.rightDriveLeadID);
+        RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, Constants.leftDriveLeadID);
+        RobotMap.leftDriveFollowerTwo.set(ControlMode.Follower, Constants.leftDriveLeadID);        
 
-        RobotMap.armFollower.set(ControlMode.Follower, RobotMap.armMasterID);
+        RobotMap.armFollower.set(ControlMode.Follower, Constants.armMasterID);
 
         RobotMap.armMaster.setNeutralMode(NeutralMode.Brake);
         RobotMap.armFollower.setNeutralMode(NeutralMode.Brake);
 
-        RobotMap.armMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        RobotMap.armMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         RobotMap.armMaster.setSelectedSensorPosition(0, 0, 0);
         RobotMap.armMaster.getSensorCollection().setAnalogPosition(0, 0);
         RobotMap.armMaster.setSensorPhase(true);
@@ -64,17 +45,19 @@ public class RobotConfig {
         RobotMap.armMaster.setInverted(true);
         RobotMap.armFollower.setInverted(true);
 
-        for (TalonSRX talon : RobotMap.driveMotors) {
-            talon.configContinuousCurrentLimit(driveMotorContinuousCurrent, timeOut);
-            talon.configPeakCurrentDuration(driveMotorPeakCurrentDuration, timeOut);
-            talon.configPeakCurrentLimit(driveMotorPeakCurrent, timeOut);
-            talon.enableCurrentLimit(enableDriveCurrentLimit);
-        }
+        RobotMap.leftDriveLead.configContinuousCurrentLimit(Constants.driveMotorContinuousCurrent, Constants.timeOut);
+        RobotMap.leftDriveLead.configPeakCurrentDuration(Constants.driveMotorPeakCurrentDuration, Constants.timeOut);
+        RobotMap.leftDriveLead.configPeakCurrentLimit(Constants.driveMotorPeakCurrent, Constants.timeOut);
+        RobotMap.leftDriveLead.enableCurrentLimit(Constants.teleop_enableDriveCurrentLimit);
+        RobotMap.rightDriveLead.configContinuousCurrentLimit(Constants.driveMotorContinuousCurrent, Constants.timeOut);
+        RobotMap.rightDriveLead.configPeakCurrentDuration(Constants.driveMotorPeakCurrentDuration, Constants.timeOut);
+        RobotMap.rightDriveLead.configPeakCurrentLimit(Constants.driveMotorPeakCurrent, Constants.timeOut);
+        RobotMap.rightDriveLead.enableCurrentLimit(Constants.teleop_enableDriveCurrentLimit);
 
-        RobotMap.leftDriveLead.configVoltageCompSaturation(voltageControlMax, 10);
+        RobotMap.leftDriveLead.configVoltageCompSaturation(Constants.voltageControlMax, 10);
         RobotMap.leftDriveLead.enableVoltageCompensation(false);
         RobotMap.leftDriveLead.configVoltageMeasurementFilter(32, 10);
-        RobotMap.rightDriveLead.configVoltageCompSaturation(RobotConfig.voltageControlMax, 10);
+        RobotMap.rightDriveLead.configVoltageCompSaturation(Constants.voltageControlMax, 10);
     	RobotMap.rightDriveLead.enableVoltageCompensation(false); 
         RobotMap.rightDriveLead.configVoltageMeasurementFilter(32, 10);
 

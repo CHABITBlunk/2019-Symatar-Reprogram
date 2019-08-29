@@ -10,19 +10,19 @@ public class StopMotors  {
   public StopMotors() {
 
   }
-  public static void stopDriveTrainMotors() {
+  public void stopDriveTrainMotors() {
     for (TalonSRX talon : RobotMap.driveMotors) {
       talon.set(ControlMode.PercentOutput, 0);
     }
   }
 
-  public static void stopIntakeMotors() {
+  public void stopIntakeMotors() {
     for (TalonSRX talon : RobotMap.intakeMotors) {
       talon.set(ControlMode.PercentOutput, 0);
     }
   }
 
-  public static void stopAllMotors() {
+  public void stopAllMotors() {
     for (TalonSRX talon : RobotMap.allMotors) {
       talon.set(ControlMode.PercentOutput, 0);
     }

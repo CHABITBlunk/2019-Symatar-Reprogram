@@ -23,24 +23,12 @@ public class Arm extends Subsystem {
     RobotMap.armMaster.set(ControlMode.PercentOutput, -0.08);
   }
 
-  public boolean[] limitSwitchesStatus() {
-    boolean fwd = true;
-    boolean rev = true;
-    if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
-      fwd = false;
-    }
-    else if (RobotMap.armMaster.getSensorCollection().isFwdLimitSwitchClosed()) {
-      rev = false;
-    }
-    return new boolean[] {fwd, rev};
-  }
-
   public void moveRev() {
     disengageBrake();
     RobotMap.armMaster.set(ControlMode.PercentOutput, 0.08);
   }
 
-  public void stopMotors() {
+  public void stop() {
     RobotMap.armMaster.set(ControlMode.PercentOutput, 0);
   }
 

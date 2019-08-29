@@ -13,41 +13,24 @@ import frc.robot.subsystems.*;
 
 public class RobotMap {
 
-  //Integer IDs
-  public static int rightDriveLeadID = 2;
-  public static int leftDriveLeadID = 7;
-
-  public static int rightDriveFollowerOneID = 1;
-  public static int rightDriveFollowerTwoID = 3;
-  public static int leftDriveFollowerOneID = 6; 
-  public static int leftDriveFollowerTwoID = 8;
-
-  public static int leftIntakeID = 9;
-  public static int rightIntakeID = 10;
-
-  public static int armMasterID = 5;
-  public static int armFollowerID = 4;
-
+  
   //Arm limit switch
   public static AnalogInput analog = new AnalogInput(0);
   public static DigitalInput armLimit = new DigitalInput(0);
 
-  public static double armStartingPositionTicks = -722.0;
-  public static int maxArmPositionTicks = -2013;
-
   //TalonSRX
-  public static TalonSRX leftDriveLead = new TalonSRX(leftDriveLeadID);
-  public static TalonSRX rightDriveLead = new TalonSRX(rightDriveLeadID);
-  public static TalonSRX rightDriveFollowerOne = new TalonSRX(rightDriveFollowerOneID);
-  public static TalonSRX rightDriveFollowerTwo = new TalonSRX(rightDriveFollowerTwoID);
-  public static TalonSRX leftDriveFollowerOne = new TalonSRX(leftDriveFollowerOneID);
-  public static TalonSRX leftDriveFollowerTwo = new TalonSRX(leftDriveFollowerTwoID);
+  public static TalonSRX leftDriveLead = new TalonSRX(Constants.leftDriveLeadID);
+  public static TalonSRX rightDriveLead = new TalonSRX(Constants.rightDriveLeadID);
+  public static TalonSRX rightDriveFollowerOne = new TalonSRX(Constants.rightDriveFollowerOneID);
+  public static TalonSRX rightDriveFollowerTwo = new TalonSRX(Constants.rightDriveFollowerTwoID);
+  public static TalonSRX leftDriveFollowerOne = new TalonSRX(Constants.leftDriveFollowerOneID);
+  public static TalonSRX leftDriveFollowerTwo = new TalonSRX(Constants.leftDriveFollowerTwoID);
 
-  public static TalonSRX leftIntake = new TalonSRX(leftIntakeID);
-  public static TalonSRX rightIntake = new TalonSRX(rightIntakeID);
+  public static TalonSRX leftIntake = new TalonSRX(Constants.leftIntakeID);
+  public static TalonSRX rightIntake = new TalonSRX(Constants.rightIntakeID);
 
-  public static TalonSRX armMaster = new TalonSRX(armMasterID);
-  public static TalonSRX armFollower = new TalonSRX(armFollowerID);
+  public static TalonSRX armMaster = new TalonSRX(Constants.armMasterID);
+  public static TalonSRX armFollower = new TalonSRX(Constants.armFollowerID);
 
   //navX
   public static AHRS navx = new AHRS(I2C.Port.kMXP);
@@ -55,6 +38,7 @@ public class RobotMap {
   //Subsystems
   public static Arm arm = new Arm();
   public static Clapper clapper = new Clapper();
+  public static DriveTrain driveTrain = new DriveTrain();
 
   //Single and double solenoids (pistons) and their in/out values
   public static DoubleSolenoid shifters = new DoubleSolenoid(0, 1);
