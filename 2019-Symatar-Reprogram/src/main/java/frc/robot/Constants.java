@@ -19,7 +19,7 @@ public class Constants {
 
   // Arm position presets
   public static int armMaxEncoderTicks = -2200;
-  public static int revSwitchPreset = -733;
+  public static int revSwitchPreset = -700;
   public static int fwdSwitchPreset = armMaxEncoderTicks - revSwitchPreset;
     
   // Misc

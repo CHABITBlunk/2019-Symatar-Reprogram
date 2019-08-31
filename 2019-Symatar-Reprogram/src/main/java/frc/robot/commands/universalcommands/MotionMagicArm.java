@@ -10,11 +10,11 @@ public class MotionMagicArm extends Command {
 
   private double motionMagicEndpoint;
   private double kf = 0.01;
-  private double kp = 0.6;
-  private double ki = 0.0003;
-  private double kd = 150;
-  private double cosine; // multiplier = 0.08
-  private double staticFrictionConstant = 0.08;
+  private double kp = 1.75;
+  private double ki = 0.00003;
+  private double kd = 100;
+  private double cosine;
+  private double staticFrictionConstant = 0.15;
   private int kSlotIndex = 0;
   private int kPIDLoopIndex = 0;
 
@@ -22,7 +22,7 @@ public class MotionMagicArm extends Command {
     setInterruptible(true);
     motionMagicEndpoint = endpoint;
     requires(RobotMap.arm);
-    cosine = staticFrictionConstant * Math.cos(endpoint * Math.PI / 180);
+    cosine = staticFrictionConstant * Math.cos(endpoint / Constants.armMaxEncoderTicks * Math.PI);
   }
 
   @Override
@@ -33,7 +33,7 @@ public class MotionMagicArm extends Command {
     RobotMap.armMaster.config_kI(kSlotIndex, ki, 0);
     RobotMap.armMaster.config_kD(kSlotIndex, kd, 0);
     RobotMap.armMaster.configMotionCruiseVelocity(1000, 0);
-    RobotMap.armMaster.configMotionAcceleration(150, 0);
+    RobotMap.armMaster.configMotionAcceleration(500, 0);
 
     if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
       RobotMap.armMaster.getSensorCollection().setQuadraturePosition(Constants.armMaxEncoderTicks, 0);
@@ -59,7 +59,7 @@ public class MotionMagicArm extends Command {
 
   @Override
   protected boolean isFinished() {
-    return Math.abs(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() - motionMagicEndpoint) < 20;
+    return Math.abs(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() - motionMagicEndpoint) < 100;
   }
 
   @Override
