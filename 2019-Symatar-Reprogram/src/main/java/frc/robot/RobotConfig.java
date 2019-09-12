@@ -30,8 +30,8 @@ public class RobotConfig {
         
         RobotMap.armMaster.configNominalOutputForward(0, 10);
         RobotMap.armMaster.configNominalOutputReverse(0, 10);
-        RobotMap.armMaster.configPeakOutputForward(1, 10);
-        RobotMap.armMaster.configPeakOutputReverse(-1, 10);
+        RobotMap.armMaster.configPeakOutputForward(0.3, 10);
+        RobotMap.armMaster.configPeakOutputReverse(-0.3, 10);
 
         //Setting motor inversions
         RobotMap.rightDriveLead.setInverted(true);

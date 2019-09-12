@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.subsystems.*;
 
@@ -17,6 +18,9 @@ public class RobotMap {
   //Arm limit switch
   public static AnalogInput analog = new AnalogInput(0);
   public static DigitalInput armLimit = new DigitalInput(0);
+
+  // Relays
+  public static Relay visionRelay = new Relay(0);
 
   //TalonSRX
   public static TalonSRX leftDriveLead = new TalonSRX(Constants.leftDriveLeadID);
