@@ -16,6 +16,7 @@ public class Robot extends TimedRobot {
   public ClapperCommand clapperCommand = new ClapperCommand();
   public static VisionCamera visionCamera;
   public static SerialPort jevois;
+//hello me namu isu calvinu
   private boolean hasCamera = false;
 
   @Override
