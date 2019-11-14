@@ -7,8 +7,8 @@ public class Constants {
   public static double encoderTicsPerShaftRotation = 4096;
   public static double wheelDiam = 6.0; 
   public static double wheelCircum = Math.PI * wheelDiam;
-  public static double encoderTicsPerWheelRotation = highGearEncoderToWheelRatio * encoderTicsPerShaftRotation;
-  public static double encoderTicsPerInch = wheelCircum / encoderTicsPerWheelRotation;
+  public static double encoderTicksPerWheelRotation = highGearEncoderToWheelRatio * encoderTicsPerShaftRotation;
+  public static double encoderTicksPerInch = wheelCircum / encoderTicksPerWheelRotation;
 
   // Drive train current/voltage limits
   public static double voltageControlMax = 11.0;
@@ -40,4 +40,27 @@ public class Constants {
 
   public static int armMasterID = 5;
   public static int armFollowerID = 4;
+
+  // Pathfinder stuff
+  public static double maxVelocity = 14;
+  public static double maxAccel = 7;
+  public static double maxJerk = 3.5;
+  public static double driveBase = 2.7;
+
+  // Conversion methods
+  public static int fpsToTicksPer100Ms(double fps) {
+    return  feetToTicks(fps / 10);
+  }
+  
+  public static double ticksPer100MsToFps(int ticksPer100Ms) {
+    return ticksToFeet(ticksPer100Ms * 10);
+  }
+
+  public static double ticksToFeet(int ticks) {
+    return ticks * encoderTicksPerInch / 12;
+  }
+
+  public static int feetToTicks(double feet) {
+    return (int) (feet / encoderTicksPerInch * 12);
+  }
 }

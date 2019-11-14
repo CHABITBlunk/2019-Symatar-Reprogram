@@ -42,7 +42,7 @@ public class RobotMap {
   //Subsystems
   public static Arm arm = new Arm();
   public static Clapper clapper = new Clapper();
-  public static DriveTrain driveTrain = new DriveTrain();
+  public static DriveTrain drive = new DriveTrain();
 
   //Single and double solenoids (pistons) and their in/out values
   public static DoubleSolenoid shifters = new DoubleSolenoid(0, 1);

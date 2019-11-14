@@ -11,6 +11,7 @@ import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
 
 public class ArcadeDrive extends Command {
+
 	private double deadZone = 0.15;
 	private double turn = 0;
 	private double throttle = 0;
@@ -31,74 +32,64 @@ public class ArcadeDrive extends Command {
 	protected void execute() {
 		throttle = OI.pilotController.getRawAxis(1); 
 		ratio = Math.abs(throttle);
-
-		if (OI.backButton.get()) {
-			RobotMap.visionRelay.set(Value.kForward);
-			double power = 0.3;
-			RobotMap.driveTrain.setLowGear();
-			RobotConfig.setDriveMotorsBrake();
-			rightPower = power - RobotMap.driveTrain.getPIDOutput();
-			leftPower = power + RobotMap.driveTrain.getPIDOutput();
-		} else {
-			RobotMap.visionRelay.set(Value.kReverse);
+		RobotMap.visionRelay.set(Value.kReverse);
+		RobotConfig.setDriveMotorsCoast();
+		if(Math.abs(OI.pilotController.getRawAxis(4))>deadZone) {	
+			turn = OI.pilotController.getRawAxis(4);
+		}
+		else {
+			turn = 0;
+		}
+		if(Math.abs(throttle)>0.01){
+			leftPower = (throttle - (sensitivity*turn*ratio));
+			rightPower = (throttle + (sensitivity*turn*ratio));
 			RobotConfig.setDriveMotorsCoast();
-			if(Math.abs(OI.pilotController.getRawAxis(4))>deadZone) {	
-				turn = OI.pilotController.getRawAxis(4);
-			}
-			else {
-				turn = 0;
-			}
-			if(Math.abs(throttle)>0.01){
-				leftPower = (throttle - (sensitivity*turn*ratio));
-				rightPower = (throttle + (sensitivity*turn*ratio));
-				RobotConfig.setDriveMotorsCoast();
-			}
-			else{
-				leftPower = (turn)*sensitivity;
-				rightPower = (-turn)*sensitivity; 
-			}
-			leftPower = throttle +(-turn);
-			rightPower= throttle +(turn);
-			if(Math.abs(leftPower)>1) {
-				leftPower = (leftPower/Math.abs(leftPower));
-				rightPower = Math.abs(rightPower/leftPower)*(rightPower/Math.abs(rightPower));
-			}
-			else if(Math.abs(rightPower)>1) {
-				rightPower = (rightPower/Math.abs(rightPower));
-				leftPower = Math.abs(leftPower/rightPower)*(leftPower/Math.abs(leftPower));
-			}
-			if(RobotMap.shifters.get() == RobotMap.highGear) {
-				sensitivity =1.25;
-				RobotConfig.setDriveMotorsCoast();
+		}
+		else{
+			leftPower = (turn)*sensitivity;
+			rightPower = (-turn)*sensitivity; 
+		}
+		leftPower = throttle +(-turn);
+		rightPower= throttle +(turn);
+		if(Math.abs(leftPower)>1) {
+			leftPower = (leftPower/Math.abs(leftPower));
+			rightPower = Math.abs(rightPower/leftPower)*(rightPower/Math.abs(rightPower));
+		}
+		else if(Math.abs(rightPower)>1) {
+			rightPower = (rightPower/Math.abs(rightPower));
+			leftPower = Math.abs(leftPower/rightPower)*(leftPower/Math.abs(leftPower));
+		}
+		if(RobotMap.shifters.get() == RobotMap.highGear) {
+			sensitivity =1.25;
+			RobotConfig.setDriveMotorsCoast();
+		}
+		else if(RobotMap.shifters.get() == RobotMap.lowGear) {
+			sensitivity =0.95;
+			RobotConfig.setDriveMotorsCoast();
+		}
+		if (RobotMap.shifters.get() == RobotMap.highGear) highGear = true;
 	
-			}
-			else if(RobotMap.shifters.get() == RobotMap.lowGear) {
-				sensitivity =0.95;
-				RobotConfig.setDriveMotorsCoast();
-			}
-			if (RobotMap.shifters.get() == RobotMap.highGear) highGear = true;
-	
-			if(OI.shiftDown.get() && highGear) {
-				RobotMap.shifters.set(RobotMap.lowGear);
-				highGear = false;
-			}
-			if (OI.shiftUp.get() && !highGear) {
-				RobotMap.shifters.set(RobotMap.highGear);
-				highGear = true;
-			}
-		}		
+		if(OI.shiftDown.get() && highGear) {
+			RobotMap.shifters.set(RobotMap.lowGear);
+			highGear = false;
+		}
+		if (OI.shiftUp.get() && !highGear) {
+			RobotMap.shifters.set(RobotMap.highGear);
+			highGear = true;
+		}
 		RobotMap.leftDriveLead.set(ControlMode.PercentOutput, leftPower);
 		RobotMap.rightDriveLead.set(ControlMode.PercentOutput, rightPower);
-	}
+	}		
+	
 
 	@Override
 	protected boolean isFinished() {
-		return RobotState.isDisabled();
+		return !RobotState.isOperatorControl();
 	}
 
 	@Override
 	protected void end() {
-		Robot.stopMotors.stopDriveTrainMotors();
+		RobotMap.drive.stopMotors();
 	}
 
 	@Override

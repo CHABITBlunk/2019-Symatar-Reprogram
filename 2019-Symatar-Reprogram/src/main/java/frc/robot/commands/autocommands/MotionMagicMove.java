@@ -17,7 +17,7 @@ public class MotionMagicMove extends Command {
 
   public MotionMagicMove(double feet) {
     setInterruptible(true);
-    endpoint = (feet * 12) * Constants.encoderTicsPerInch;
+    endpoint = (feet * 12) * Constants.encoderTicksPerInch;
   }
 
   @Override

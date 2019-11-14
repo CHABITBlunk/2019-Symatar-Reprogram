@@ -44,7 +44,7 @@ public class IntakeOuttake extends Command {
 
   @Override
   protected void end() {
-    Robot.stopMotors.stopIntakeMotors();
+    RobotMap.clapper.stopMotors();
   }
 
   @Override
