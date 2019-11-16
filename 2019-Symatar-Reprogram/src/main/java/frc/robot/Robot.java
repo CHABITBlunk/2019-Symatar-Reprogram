@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.autocommands.AutoPathfinder;
 import frc.robot.commands.teleopcommands.*;
 import frc.robot.commands.universalcommands.*;
 
@@ -29,6 +30,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    RobotMap.drive.initVelocityPIDs();
+    RobotMap.drive.startAutoOdometry(0, 0, 0);
+    new AutoPathfinder().start();
   }
 
   @Override

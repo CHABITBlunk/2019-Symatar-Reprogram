@@ -3,12 +3,8 @@ package frc.robot.commands.teleopcommands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.Robot;
-import frc.robot.RobotConfig;
-import frc.robot.RobotMap;
+import frc.robot.*;
 
 public class ArcadeDrive extends Command {
 
@@ -30,12 +26,11 @@ public class ArcadeDrive extends Command {
 
 	@Override
 	protected void execute() {
-		throttle = OI.pilotController.getRawAxis(1); 
+		throttle = OI.driverController.getRawAxis(1); 
 		ratio = Math.abs(throttle);
-		RobotMap.visionRelay.set(Value.kReverse);
 		RobotConfig.setDriveMotorsCoast();
-		if(Math.abs(OI.pilotController.getRawAxis(4))>deadZone) {	
-			turn = OI.pilotController.getRawAxis(4);
+		if(Math.abs(OI.driverController.getRawAxis(4))>deadZone) {	
+			turn = OI.driverController.getRawAxis(4);
 		}
 		else {
 			turn = 0;
@@ -89,7 +84,7 @@ public class ArcadeDrive extends Command {
 
 	@Override
 	protected void end() {
-		RobotMap.drive.stopMotors();
+		RobotMap.drive.Stop();
 	}
 
 	@Override

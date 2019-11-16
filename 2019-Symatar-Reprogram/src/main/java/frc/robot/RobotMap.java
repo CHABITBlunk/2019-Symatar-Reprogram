@@ -80,6 +80,11 @@ public class RobotMap {
     armMaster,
     armFollower
   };
+  
+  public static TalonSRX[] driveMotorLeads = {
+    leftDriveLead,
+    rightDriveLead
+  };
 
   public static TalonSRX[] allMotors = {
     leftDriveLead,

@@ -2,14 +2,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.*;
-import frc.robot.sensors.*;
-import frc.robot.tools.controlloops.*;
-import frc.robot.tools.pathTools.*;
+import frc.robot.ButtonMap;
+import frc.robot.Constants;
+import frc.robot.RobotMap;
+import frc.robot.sensors.DriveEncoder;
+import frc.robot.tools.controlloops.PID;
+import frc.robot.tools.pathtools.Odometry;
 
 public class DriveTrain extends Subsystem {
 
@@ -24,18 +24,16 @@ public class DriveTrain extends Subsystem {
   public static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
 	private double speed;
   private double f = 0.1461;
-  private double p = 0.715;
-  private double i = 0.000013;
-  private double d = 13.5;
+  private double p = 0.11;
+  private double i = 0.002;
+  private double d = 5;
 	private int profile = 0;
 	private Odometry autoOdometry;
 	private PID alignmentPID;
 	private double alignmentP = 0.011;
-	private double alignmenti= 0.000;
-	private double alignmentd;
-	private double power;
-	private boolean connected;
-	private double distance;
+	private double alignmentI= 0.000;
+	private double alignmentD;
+	
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -89,7 +87,7 @@ public class DriveTrain extends Subsystem {
     RobotMap.rightDriveLead.set(ControlMode.Velocity, Constants.fpsToTicksPer100Ms(speed));
 	}
 	public void initAlignmentPID(){
-		alignmentPID = new PID(alignmentP, alignmenti, alignmentd);
+		alignmentPID = new PID(alignmentP, alignmentI, alignmentD);
 		alignmentPID.setMaxOutput(0.4);
 		alignmentPID.setMinOutput(-0.4);
     alignmentPID.setSetPoint(0);

@@ -1,12 +1,8 @@
-package main.java.frc.robot.tools.pathtools;
+package frc.robot.tools.pathtools;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
-
-import frc.robot.RobotConfig;
-import frc.robot.RobotStats;
+import frc.robot.Constants;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
@@ -39,24 +35,23 @@ public class PathSetup {
 	}
 	public Trajectory generateMainPath() {
 		// all units are in feet, cause MURICA!, basically the path calculations are assuming 1/20th of a second between updates, and a max velcoity of v ft/sec, a max acceleration of a ft/sec, and a max jerk of 75 feet/sec^3
-		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_FAST, 0.05,velocity, RobotStats.robotMaxAccertion, 75.0);
+		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_FAST, 0.05,velocity, Constants.maxAccel, 75.0);
 		Trajectory trajectory = Pathfinder.generate(points, config);
 		return trajectory;
 	}
 	public DistanceFollower generateLeftPathFollower(){
 		//this isn't measured wheel base, instead it is effective wheel base which is found by rotating the robot around x times 
 		//then C=2Pir and solve for r or r=C/(2xPi) then double I believe
-		TankModifier modifier = new TankModifier(mainPath).modify(RobotStats.robotBaseDistance);
+		TankModifier modifier = new TankModifier(mainPath).modify(Constants.baseDistance);
 		Trajectory left= modifier.getLeftTrajectory();
 		DistanceFollower leftFollower = new DistanceFollower(left);
 		// this section of code is to create an distance follower which is basically a fancier version of our PID class and then to 
 		//modify that for Tank drive 
-		
 		return leftFollower;
 	}
 	public DistanceFollower generateRightPathFollower(){
 		//check comments for generateLeftPathFollower() basically same thing
-		TankModifier modifier = new TankModifier(mainPath).modify(RobotStats.robotBaseDistance);
+		TankModifier modifier = new TankModifier(mainPath).modify(Constants.baseDistance);
 		Trajectory right= modifier.getRightTrajectory();
 		DistanceFollower rightfollower = new DistanceFollower(right);
 		//this is a way to print out what pathfinder expects the robot to do and how that is supposed to happen

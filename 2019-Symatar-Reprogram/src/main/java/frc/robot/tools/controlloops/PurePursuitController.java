@@ -1,11 +1,11 @@
-package frc.robot.tools.controlLoops;
+package frc.robot.tools.controlloops;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.RobotStats;
-import frc.robot.tools.pathTools.PathSetup;
-import frc.robot.tools.pathTools.Odometry;
+import frc.robot.Constants;
+import frc.robot.tools.pathtools.PathSetup;
+import frc.robot.tools.pathtools.Odometry;
 import frc.robot.tools.math.Point;
 import frc.robot.tools.math.Vector;
 import jaci.pathfinder.Pathfinder;
@@ -44,17 +44,7 @@ public class PurePursuitController extends Command {
 	private boolean useOutsideOdometry;
 	private boolean shouldEnd;
 	private boolean odometryDirection;
-  	//no carried over position information
-  	public PurePursuitController(PathSetup path, double lookAhead, double kValue){
-		chosenPath = path;
-		lookAheadDistance = lookAhead;  
-		k = kValue;  
-		requires(RobotMap.drive);
-		useOutsideOdometry = false;
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-  	}
-  	//for carried over angle
+	
   	public PurePursuitController(PathSetup path, double lookAhead, double kValue, boolean outsideOdometry, boolean robotAbsoluteDirection){
 		chosenPath = path;
 		lookAheadDistance = lookAhead;  
@@ -247,8 +237,8 @@ public class PurePursuitController extends Command {
 			v = -v;
 			c = -c;
 		}
-		leftVelocity = v*(2+(c*RobotStats.robotBaseDistance))/2;
-		rightVelocity = v*(2-(c*RobotStats.robotBaseDistance))/2;
+		leftVelocity = v*(2+(c*Constants.baseDistance))/2;
+		rightVelocity = v*(2-(c*Constants.baseDistance))/2;
 		SmartDashboard.putNumber("left", leftVelocity);
 		SmartDashboard.putNumber("right", rightVelocity);
 
@@ -275,6 +265,7 @@ public class PurePursuitController extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		System.out.println(closestSegment);
 	}
 	public void forceFinish(){
 		shouldEnd = true;

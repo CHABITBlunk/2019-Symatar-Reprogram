@@ -2,12 +2,11 @@ package frc.robot;
 
 public class Constants {
   // Wheel and encoder presets
-  public static double highGearEncoderToWheelRatio = 7.5;
-  public static double lowGearEncoderToWheelRatio = 7.2;
+  public static double lowGearEncoderToWheelRatio = 7.81;
   public static double encoderTicsPerShaftRotation = 4096;
   public static double wheelDiam = 6.0; 
   public static double wheelCircum = Math.PI * wheelDiam;
-  public static double encoderTicksPerWheelRotation = highGearEncoderToWheelRatio * encoderTicsPerShaftRotation;
+  public static double encoderTicksPerWheelRotation = lowGearEncoderToWheelRatio * encoderTicsPerShaftRotation;
   public static double encoderTicksPerInch = wheelCircum / encoderTicksPerWheelRotation;
 
   // Drive train current/voltage limits
@@ -45,7 +44,7 @@ public class Constants {
   public static double maxVelocity = 14;
   public static double maxAccel = 7;
   public static double maxJerk = 3.5;
-  public static double driveBase = 2.7;
+  public static double baseDistance = 2.7;
 
   // Conversion methods
   public static int fpsToTicksPer100Ms(double fps) {
