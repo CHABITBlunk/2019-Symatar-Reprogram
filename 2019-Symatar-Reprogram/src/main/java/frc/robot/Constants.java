@@ -47,6 +47,10 @@ public class Constants {
   public static double baseDistance = 2.7;
 
   // Conversion methods
+  public static double armTicksToRadians(double ticks) {
+    return (ticks / armMaxEncoderTicks) * Math.PI;
+  }
+
   public static int fpsToTicksPer100Ms(double fps) {
     return  feetToTicks(fps / 10);
   }

@@ -7,16 +7,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.ButtonMap;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.sensors.DriveEncoder;
+import frc.robot.sensors.encoders.DriveEncoder;
 import frc.robot.tools.controlloops.PID;
 import frc.robot.tools.pathtools.Odometry;
 
 public class DriveTrain extends Subsystem {
 
-  private double deadZone = 0.15;
-	private double turn =0;
-	private double throttel = 0;
-	private double povValue;
+  private double turn = 0;
+	private double throttle = 0;
 	private double ratio = 0;
 	private double sensitivity;
 	private double minTurnFactor = 0.4;
@@ -100,17 +98,16 @@ public class DriveTrain extends Subsystem {
 		double rightPower;
 		double differential;
 		
-		throttel = ButtonMap.getDriveThrottle(); 
-		if(throttel ==0){
-			throttel = 0.001;
+		throttle = ButtonMap.getDriveThrottle(); 
+		if(throttle == 0){
+			throttle = 0.001;
 		}
-		ratio = Math.abs(1/throttel);
-		povValue = ButtonMap.getPOV();
+		ratio = Math.abs(1/throttle);
 		turn = ButtonMap.getRotation();
 		differential = (turn*ratio*sensitivity) + Math.abs(minTurnFactor*turn);
 
-		leftPower = (throttel - (differential));
-		rightPower = (throttel + (differential));
+		leftPower = (throttle - (differential));
+		rightPower = (throttle + (differential));
 	
 		if(Math.abs(leftPower)>1) {
 			rightPower = Math.abs(rightPower/leftPower)*Math.signum(rightPower);

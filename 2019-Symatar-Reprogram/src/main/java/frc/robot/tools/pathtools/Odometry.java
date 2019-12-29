@@ -1,12 +1,9 @@
 package frc.robot.tools.pathtools;
 
-import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
-import frc.robot.sensors.DriveEncoder;
-import frc.robot.sensors.Navx;
-import jaci.pathfinder.Pathfinder;
+import frc.robot.sensors.encoders.DriveEncoder;
+import frc.robot.sensors.i2c.Navx;
 
 public class Odometry extends Command {
   private double theta= 0;
@@ -26,7 +23,6 @@ public class Odometry extends Command {
   private double yNext;
   private double xNext;
   private boolean shouldRun; 
-  private double dt;
   private boolean isReversed;
   private boolean finish;
   public Odometry(boolean reversed) {
@@ -34,7 +30,7 @@ public class Odometry extends Command {
     isReversed = reversed;
     leftDriveEncoder = new DriveEncoder(RobotMap.leftDriveLead, RobotMap.leftDriveLead.getSelectedSensorPosition(0));
     rightDriveEncoder = new DriveEncoder(RobotMap.rightDriveLead, RobotMap.rightDriveLead.getSelectedSensorPosition(0));
-    navx = new Navx(RobotMap.navx);
+    navx = RobotMap.navx;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -43,7 +39,7 @@ public class Odometry extends Command {
     isReversed = reversed;
     leftDriveEncoder = new DriveEncoder(RobotMap.leftDriveLead, RobotMap.leftDriveLead.getSelectedSensorPosition(0));
     rightDriveEncoder = new DriveEncoder(RobotMap.rightDriveLead, RobotMap.rightDriveLead.getSelectedSensorPosition(0));
-    navx = new Navx(RobotMap.navx);
+    navx = RobotMap.navx;
     x = startingX;
     y = startingY;
     // Use requires() here to declare subsystem dependencies
@@ -62,7 +58,6 @@ public class Odometry extends Command {
     navx.softResetYaw();
     leftDriveEncoder.softReset();
     rightDriveEncoder.softReset();
-    dt = 0.005;
     finish = false;
   }
   public void endOdmetry(){

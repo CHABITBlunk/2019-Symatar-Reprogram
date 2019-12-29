@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.autocommands.AutoPathfinder;
+import frc.robot.RobotState.ArmPosition;
 import frc.robot.commands.teleopcommands.*;
 import frc.robot.commands.universalcommands.*;
 
@@ -17,6 +17,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    System.out.println(RobotMap.sensor.getDistance());
   }
 
   @Override
@@ -30,9 +31,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    RobotMap.drive.initVelocityPIDs();
-    RobotMap.drive.startAutoOdometry(0, 0, 0);
-    new AutoPathfinder().start();
   }
 
   @Override
@@ -45,14 +43,15 @@ public class Robot extends TimedRobot {
     config.teleopConfig();
     driveTrain.start();
     clapperCommand.start();
+    // new BlinkinSetColor(RobotMap.blinkin, 0.75).start();
   }
 
   @Override
   public void teleopPeriodic() {
-    OI.xButton.whenPressed(new MotionMagicArm(0));
-    OI.bButton.whenPressed(new MotionMagicArm(Constants.armMaxEncoderTicks));
-    OI.aButton.whenPressed(new MotionMagicArm(Constants.fwdSwitchPreset));
-    OI.yButton.whenPressed(new MotionMagicArm(Constants.revSwitchPreset));
+    OI.xButton.whenPressed(new MotionMagicArm(ArmPosition.fGround));
+    OI.bButton.whenPressed(new MotionMagicArm(ArmPosition.bGround));
+    OI.aButton.whenPressed(new MotionMagicArm(ArmPosition.fSwitch));
+    OI.yButton.whenPressed(new MotionMagicArm(ArmPosition.bSwitch));
     Scheduler.getInstance().run();
   }
 

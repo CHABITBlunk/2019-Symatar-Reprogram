@@ -17,9 +17,9 @@ public class ClapperCommand extends Command {
   @Override
   protected void execute() {
     if (OI.driverController.getRawAxis(2) >= 0.5) {
-      RobotMap.clapper.outtake();
-    } else if (OI.driverController.getRawAxis(3) >= 0.5) {
       RobotMap.clapper.intake();
+    } else if (OI.driverController.getRawAxis(3) >= 0.5) {
+      RobotMap.clapper.outtake();
     } else {
       RobotMap.clapper.stopMotors();
     }

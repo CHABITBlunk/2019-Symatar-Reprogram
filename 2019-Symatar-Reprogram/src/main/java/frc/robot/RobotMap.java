@@ -1,28 +1,27 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.robot.sensors.i2c.*;
+import frc.robot.sensors.pwm.*;
 import frc.robot.subsystems.*;
 
 public class RobotMap {
-
   
-  //Arm limit switch
+  // Arm limit switch
   public static AnalogInput analog = new AnalogInput(0);
   public static DigitalInput armLimit = new DigitalInput(0);
 
-  // Relays
-  public static Relay visionRelay = new Relay(0);
+  // Relays/LED Controllers
+  // public static PWM blinkin = new PWM(2);
 
-  //TalonSRX
+  // PWM sensors
+  private static Counter counter = new Counter(1);
+  public static UltrasonicSensor sensor = new UltrasonicSensor(counter, 0.49, 0.96); // slope: 0.12, intercept: 0.96
+
+  // TalonSRX
   public static TalonSRX leftDriveLead = new TalonSRX(Constants.leftDriveLeadID);
   public static TalonSRX rightDriveLead = new TalonSRX(Constants.rightDriveLeadID);
   public static TalonSRX rightDriveFollowerOne = new TalonSRX(Constants.rightDriveFollowerOneID);
@@ -36,15 +35,15 @@ public class RobotMap {
   public static TalonSRX armMaster = new TalonSRX(Constants.armMasterID);
   public static TalonSRX armFollower = new TalonSRX(Constants.armFollowerID);
 
-  //navX
-  public static AHRS navx = new AHRS(I2C.Port.kMXP);
+  // navX
+  public static Navx navx = new Navx(new AHRS(I2C.Port.kMXP));
 
-  //Subsystems
+  // Subsystems
   public static Arm arm = new Arm();
   public static Clapper clapper = new Clapper();
   public static DriveTrain drive = new DriveTrain();
 
-  //Single and double solenoids (pistons) and their in/out values
+  // Pistons and their in/out values
   public static DoubleSolenoid shifters = new DoubleSolenoid(0, 1);
   public static DoubleSolenoid.Value lowGear = DoubleSolenoid.Value.kForward;
   public static DoubleSolenoid.Value highGear = DoubleSolenoid.Value.kReverse;
@@ -61,7 +60,7 @@ public class RobotMap {
   public static DoubleSolenoid.Value disengageBrake = Value.kReverse;
   public static DoubleSolenoid.Value engageBrake = Value.kForward;
 
-  //Arrays of motors
+  // Arrays of motors
   public static TalonSRX[] driveMotors = {
     leftDriveLead,
     rightDriveLead,

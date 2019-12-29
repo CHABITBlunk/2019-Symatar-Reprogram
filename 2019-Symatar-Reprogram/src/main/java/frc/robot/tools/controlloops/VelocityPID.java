@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
-import frc.robot.sensors.DriveEncoder;
+import frc.robot.sensors.encoders.*;
 
 public class VelocityPID extends Command {
   private double speed;

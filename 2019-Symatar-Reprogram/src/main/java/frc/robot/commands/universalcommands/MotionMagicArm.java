@@ -5,33 +5,39 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
+import frc.robot.RobotState.ArmPosition;
 
 public class MotionMagicArm extends Command {
 
-  private double motionMagicEndpoint;
+  private double _endpoint;
   private double kf = 0.01;
   private double kp = 1.75;
   private double ki = 0.00003;
   private double kd = 100;
   private double cosine;
+  private ArmPosition _pos;
   private double staticFrictionConstant = 0.15;
-  private int kSlotIndex = 0;
-  private int kPIDLoopIndex = 0;
 
-  public MotionMagicArm(double endpoint) {
+  public MotionMagicArm(ArmPosition pos) {
     setInterruptible(true);
-    motionMagicEndpoint = endpoint;
     requires(RobotMap.arm);
-    cosine = staticFrictionConstant * Math.cos(endpoint / Constants.armMaxEncoderTicks * Math.PI);
+    _pos = pos;
+    switch (pos) {
+      case fSwitch: _endpoint = Constants.fwdSwitchPreset; break;
+      case bSwitch: _endpoint = Constants.revSwitchPreset; break;
+      case fGround: _endpoint = 0; break;
+      case bGround: _endpoint = Constants.armMaxEncoderTicks; break;
+    }
+    cosine = Math.cos(Constants.armTicksToRadians(_endpoint));
   }
 
   @Override
   protected void initialize() {
-    RobotMap.armMaster.selectProfileSlot(kSlotIndex, kPIDLoopIndex);
-    RobotMap.armMaster.config_kF(kSlotIndex, kf, 0);
-    RobotMap.armMaster.config_kP(kSlotIndex, kp, 0);
-    RobotMap.armMaster.config_kI(kSlotIndex, ki, 0);
-    RobotMap.armMaster.config_kD(kSlotIndex, kd, 0);
+    RobotMap.armMaster.selectProfileSlot(0, 0);
+    RobotMap.armMaster.config_kF(0, kf, 0);
+    RobotMap.armMaster.config_kP(0, kp, 0);
+    RobotMap.armMaster.config_kI(0, ki, 0);
+    RobotMap.armMaster.config_kD(0, kd, 0);
     RobotMap.armMaster.configMotionCruiseVelocity(1000, 0);
     RobotMap.armMaster.configMotionAcceleration(500, 0);
 
@@ -43,7 +49,8 @@ public class MotionMagicArm extends Command {
     }
 
     RobotMap.arm.disengageBrake();
-    RobotMap.armMaster.set(ControlMode.MotionMagic, motionMagicEndpoint, DemandType.ArbitraryFeedForward, cosine);
+    RobotMap.armMaster.set(ControlMode.MotionMagic, _endpoint, DemandType.ArbitraryFeedForward, cosine * staticFrictionConstant);
+    // new BlinkinSetColor(RobotMap.blinkin, 0.13).start();
   }
 
 
@@ -59,11 +66,19 @@ public class MotionMagicArm extends Command {
 
   @Override
   protected boolean isFinished() {
-    return Math.abs(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() - motionMagicEndpoint) < 100;
+    return Math.abs(RobotMap.armMaster.getSensorCollection().getQuadraturePosition() - _endpoint) < 100;
   }
 
   @Override
   protected void end() {
+    /*
+    switch(_pos) {
+      case fGround: new BlinkinSetColor(RobotMap.blinkin, 0.57).start(); break;
+      case fSwitch: new BlinkinSetColor(RobotMap.blinkin, 0.65).start(); break;
+      case bGround: new BlinkinSetColor(RobotMap.blinkin, 0.67).start(); break;
+      case bSwitch: new BlinkinSetColor(RobotMap.blinkin, 0.91).start(); break;
+    }
+    */
     RobotMap.arm.stop();
     RobotMap.arm.engageBrake();
   }

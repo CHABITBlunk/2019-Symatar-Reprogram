@@ -239,8 +239,6 @@ public class PurePursuitController extends Command {
 		}
 		leftVelocity = v*(2+(c*Constants.baseDistance))/2;
 		rightVelocity = v*(2-(c*Constants.baseDistance))/2;
-		SmartDashboard.putNumber("left", leftVelocity);
-		SmartDashboard.putNumber("right", rightVelocity);
 
 		if(chosenPath.getReversed()){
 			RobotMap.drive.setLeftSpeed(rightVelocity);

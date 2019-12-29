@@ -5,6 +5,6 @@
   "maxAcceleration": 7.0,
   "maxJerk": 3.5,
   "wheelBase": 2.7,
-  "gameName": "Destination: Deep Space",
+  "gameName": "FIRST Power Up",
   "outputDir": ".."
 }
