@@ -65,7 +65,7 @@ public class RobotConfig {
             t.getSensorCollection().setQuadraturePosition(0, 0);
             t.configPeakOutputForward(0.9, 0);
         }
-        // RobotMap.blinkin.setBounds(2, 2, 1.5, 1, 1);
+        RobotMap.blinkin.setBounds(2, 2, 1.5, 1, 1);
     }
 
     public void teleopConfig() {

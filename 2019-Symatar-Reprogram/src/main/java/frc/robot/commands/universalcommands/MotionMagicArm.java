@@ -38,8 +38,8 @@ public class MotionMagicArm extends Command {
     RobotMap.armMaster.config_kP(0, kp, 0);
     RobotMap.armMaster.config_kI(0, ki, 0);
     RobotMap.armMaster.config_kD(0, kd, 0);
-    RobotMap.armMaster.configMotionCruiseVelocity(1000, 0);
-    RobotMap.armMaster.configMotionAcceleration(500, 0);
+    RobotMap.armMaster.configMotionCruiseVelocity(1200, 0);
+    RobotMap.armMaster.configMotionAcceleration(600, 0);
 
     if (RobotMap.armMaster.getSensorCollection().isRevLimitSwitchClosed()) {
       RobotMap.armMaster.getSensorCollection().setQuadraturePosition(Constants.armMaxEncoderTicks, 0);
@@ -50,7 +50,7 @@ public class MotionMagicArm extends Command {
 
     RobotMap.arm.disengageBrake();
     RobotMap.armMaster.set(ControlMode.MotionMagic, _endpoint, DemandType.ArbitraryFeedForward, cosine * staticFrictionConstant);
-    // new BlinkinSetColor(RobotMap.blinkin, 0.13).start();
+    new BlinkinSetColor(RobotMap.blinkin, 0.13).start();
   }
 
 
@@ -71,14 +71,12 @@ public class MotionMagicArm extends Command {
 
   @Override
   protected void end() {
-    /*
     switch(_pos) {
-      case fGround: new BlinkinSetColor(RobotMap.blinkin, 0.57).start(); break;
-      case fSwitch: new BlinkinSetColor(RobotMap.blinkin, 0.65).start(); break;
-      case bGround: new BlinkinSetColor(RobotMap.blinkin, 0.67).start(); break;
-      case bSwitch: new BlinkinSetColor(RobotMap.blinkin, 0.91).start(); break;
+      case fGround: new BlinkinSetColor(RobotMap.blinkin, 0.93).start(); break;
+      case fSwitch: new BlinkinSetColor(RobotMap.blinkin, 0.91).start(); break;
+      case bGround: new BlinkinSetColor(RobotMap.blinkin, 0.87).start(); break;
+      case bSwitch: new BlinkinSetColor(RobotMap.blinkin, 0.77).start(); break;
     }
-    */
     RobotMap.arm.stop();
     RobotMap.arm.engageBrake();
   }

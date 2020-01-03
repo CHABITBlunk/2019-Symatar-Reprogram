@@ -15,7 +15,7 @@ public class RobotMap {
   public static DigitalInput armLimit = new DigitalInput(0);
 
   // Relays/LED Controllers
-  // public static PWM blinkin = new PWM(2);
+  public static PWM blinkin = new PWM(2);
 
   // PWM sensors
   private static Counter counter = new Counter(1);

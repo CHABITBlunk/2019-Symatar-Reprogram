@@ -35,7 +35,7 @@ public class ArcadeDrive extends Command {
 		else {
 			turn = 0;
 		}
-		if(Math.abs(throttle)>0.01){
+		if(Math.abs(throttle)>0.1){
 			leftPower = (throttle - (sensitivity*turn*ratio));
 			rightPower = (throttle + (sensitivity*turn*ratio));
 			RobotConfig.setDriveMotorsCoast();
